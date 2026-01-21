@@ -124,16 +124,22 @@ export function MobilePreview() {
       {/* Scaled Preview */}
       <div className="flex justify-center py-3 px-3">
         <div
-          className="origin-top"
           style={{
-            transform: `scale(${scale})`,
-            width: '612px',
-            minHeight: '792px',
-            transformOrigin: 'top center',
+            width: `${612 * scale}px`,
+            height: `${792 * scale}px`,
           }}
         >
-          <div className="bg-white shadow-lg" style={{ minHeight: '792px' }}>
-            {viewMode === 'normal' ? renderTemplate() : <ATSPreview data={displayData} />}
+          <div
+            className="origin-top-left"
+            style={{
+              transform: `scale(${scale})`,
+              width: '612px',
+              minHeight: '792px',
+            }}
+          >
+            <div className="bg-white shadow-lg" style={{ minHeight: '792px' }}>
+              {viewMode === 'normal' ? renderTemplate() : <ATSPreview data={displayData} />}
+            </div>
           </div>
         </div>
       </div>
@@ -148,7 +154,7 @@ export function MobilePreview() {
       )}
 
       {/* Spacer for bottom sheet */}
-      <div className="h-[200px]" />
+      <div className="h-[180px]" />
     </div>
   );
 }
