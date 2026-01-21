@@ -139,73 +139,66 @@ export function ResumePreview() {
   return (
     <div className="flex-1 flex flex-col bg-bg-hover/50 overflow-hidden print:overflow-visible print:bg-white">
       {/* Preview Header - Hidden when printing */}
-      <div className="flex flex-col gap-2 px-3 py-2 bg-bg-surface border-b border-border print:hidden">
-        {/* Top row: Template and View Mode */}
-        <div className="flex items-center justify-between gap-2">
-          {/* Template Switcher with Label */}
+      <div className="flex items-center justify-between gap-4 px-4 py-3 bg-bg-surface border-b border-border print:hidden">
+        {/* Left: Template & Color */}
+        <div className="flex items-center gap-4 overflow-x-auto">
+          {/* Template Switcher */}
+          <div className="flex items-center gap-1 p-1 bg-bg-primary rounded-lg">
+            {templates.map((template) => (
+              <button
+                key={template.id}
+                onClick={() => setTemplate(template.id)}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap ${
+                  selectedTemplate === template.id
+                    ? 'bg-accent text-white shadow-sm'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
+                }`}
+              >
+                {template.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Color Picker */}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-text-muted hidden sm:inline">Template:</span>
-            <div className="flex items-center gap-1">
-              {templates.map((template) => (
-                <button
-                  key={template.id}
-                  onClick={() => setTemplate(template.id)}
-                  className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
-                    selectedTemplate === template.id
-                      ? 'bg-accent text-white'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
-                  }`}
-                  style={template.style}
-                >
-                  {template.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* View Mode Toggle - Improved visibility */}
-          <div className="flex items-center gap-1 p-0.5 bg-bg-primary rounded-lg border border-border">
-            <button
-              onClick={() => setViewMode('normal')}
-              className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
-                viewMode === 'normal'
-                  ? 'bg-accent text-white shadow-sm'
-                  : 'text-text-secondary hover:text-text-primary'
-              }`}
-            >
-              Normal
-            </button>
-            <button
-              onClick={() => setViewMode('ats')}
-              className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
-                viewMode === 'ats'
-                  ? 'bg-accent text-white shadow-sm'
-                  : 'text-text-secondary hover:text-text-primary'
-              }`}
-            >
-              ATS View
-            </button>
-          </div>
-        </div>
-
-        {/* Bottom row: Color Picker */}
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-text-muted">Color:</span>
-          <div className="flex items-center gap-1.5">
             {colorOptions.map((color) => (
               <button
                 key={color.id}
                 onClick={() => setAccentColor(color.id)}
-                className={`w-5 h-5 rounded-full transition-all ${
+                className={`w-6 h-6 rounded-full transition-all border-2 ${
                   accentColor === color.id
-                    ? 'ring-2 ring-offset-2 ring-offset-bg-surface ring-accent scale-110'
-                    : 'hover:scale-110'
+                    ? 'border-text-primary scale-110'
+                    : 'border-transparent hover:scale-110'
                 }`}
                 style={{ backgroundColor: accentColors[color.id].primary }}
                 title={color.label}
               />
             ))}
           </div>
+        </div>
+
+        {/* Right: View Mode Toggle */}
+        <div className="flex items-center gap-1 p-1 bg-bg-primary rounded-lg flex-shrink-0">
+          <button
+            onClick={() => setViewMode('normal')}
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+              viewMode === 'normal'
+                ? 'bg-accent text-white shadow-sm'
+                : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
+            }`}
+          >
+            Normal
+          </button>
+          <button
+            onClick={() => setViewMode('ats')}
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+              viewMode === 'ats'
+                ? 'bg-accent text-white shadow-sm'
+                : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
+            }`}
+          >
+            ATS View
+          </button>
         </div>
       </div>
 
