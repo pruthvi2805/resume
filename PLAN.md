@@ -2,7 +2,7 @@
 
 > **Domain:** resume.kpruthvi.com
 > **Repo:** https://github.com/pruthvi2805/resume
-> **Status:** Phase 1 Complete - Ready for Phase 2
+> **Status:** Phase 2 Complete - Landing Page Live
 > **Last Updated:** 2026-01-21
 
 ---
@@ -448,14 +448,15 @@ resume/
 - [x] Add .gitignore, README.md
 - [x] Initial commit and push
 
-### Phase 2: Landing Page
-- [ ] Create Header component (logo, theme toggle, GitHub link)
-- [ ] Create Hero section
-- [ ] Create Features section (why ATS matters)
-- [ ] Create Footer component
-- [ ] Add "Start Fresh" and "Import" buttons (import disabled for MVP)
-- [ ] Responsive design
-- [ ] Dark/light mode support
+### Phase 2: Landing Page ✅
+- [x] Create Header component (logo, theme toggle, GitHub link)
+- [x] Create Hero section
+- [x] Create Features section (why ATS matters)
+- [x] Create Footer component
+- [x] Add "Start Fresh" and "Import" buttons (import disabled for MVP)
+- [x] Responsive design
+- [x] Dark/light mode support
+- [x] GitHub Pages deployment workflow
 
 ### Phase 3: Builder Layout
 - [ ] Create builder page layout (sidebar + preview)
