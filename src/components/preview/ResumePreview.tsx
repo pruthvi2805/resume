@@ -140,41 +140,38 @@ export function ResumePreview() {
     <div className="flex-1 flex flex-col bg-bg-hover/50 overflow-hidden print:overflow-visible print:bg-white">
       {/* Preview Header - Hidden when printing */}
       <div className="flex items-center justify-between gap-4 px-4 py-3 bg-bg-surface border-b border-border print:hidden">
-        {/* Left: Template & Color */}
-        <div className="flex items-center gap-4 overflow-x-auto">
-          {/* Template Switcher */}
-          <div className="flex items-center gap-1 p-1 bg-bg-primary rounded-lg">
-            {templates.map((template) => (
-              <button
-                key={template.id}
-                onClick={() => setTemplate(template.id)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap ${
-                  selectedTemplate === template.id
-                    ? 'bg-accent text-white shadow-sm'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
-                }`}
-              >
-                {template.label}
-              </button>
-            ))}
-          </div>
+        {/* Left: Template Switcher */}
+        <div className="flex items-center gap-1 p-1 bg-bg-primary rounded-lg overflow-x-auto">
+          {templates.map((template) => (
+            <button
+              key={template.id}
+              onClick={() => setTemplate(template.id)}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap ${
+                selectedTemplate === template.id
+                  ? 'bg-accent text-white shadow-sm'
+                  : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
+              }`}
+            >
+              {template.label}
+            </button>
+          ))}
+        </div>
 
-          {/* Color Picker */}
-          <div className="flex items-center gap-2">
-            {colorOptions.map((color) => (
-              <button
-                key={color.id}
-                onClick={() => setAccentColor(color.id)}
-                className={`w-6 h-6 rounded-full transition-all border-2 ${
-                  accentColor === color.id
-                    ? 'border-text-primary scale-110'
-                    : 'border-transparent hover:scale-110'
-                }`}
-                style={{ backgroundColor: accentColors[color.id].primary }}
-                title={color.label}
-              />
-            ))}
-          </div>
+        {/* Center: Color Picker */}
+        <div className="flex items-center gap-2 px-3 border-l border-r border-border">
+          {colorOptions.map((color) => (
+            <button
+              key={color.id}
+              onClick={() => setAccentColor(color.id)}
+              className={`w-6 h-6 rounded-full transition-all border-2 ${
+                accentColor === color.id
+                  ? 'border-text-primary scale-110'
+                  : 'border-transparent hover:scale-110'
+              }`}
+              style={{ backgroundColor: accentColors[color.id].primary }}
+              title={color.label}
+            />
+          ))}
         </div>
 
         {/* Right: View Mode Toggle */}
