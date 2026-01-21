@@ -20,12 +20,18 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    // Trigger animation after mount
+    // Trigger fade-in after mount
     requestAnimationFrame(() => setIsVisible(true));
     return () => {
       document.body.style.overflow = '';
     };
   }, []);
+
+  const handleClose = () => {
+    setIsVisible(false);
+    // Wait for animation to complete before unmounting
+    setTimeout(onClose, 200);
+  };
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return '#22c55e';
@@ -52,7 +58,7 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
         zIndex: 9999,
         backgroundColor: isVisible ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0)',
       }}
-      onClick={onClose}
+      onClick={handleClose}
     >
       <div
         className="relative rounded-xl shadow-2xl w-full max-w-xs transition-all duration-200"
@@ -66,7 +72,7 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
       >
         {/* Close button */}
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-3 right-3 p-1 rounded-md transition-colors hover:bg-black/10"
           style={{ color: isDark ? '#666' : '#9ca3af' }}
         >
