@@ -85,7 +85,7 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
   };
 
   return (
-    <aside className="w-full lg:w-72 flex-shrink-0 bg-bg-surface border-r border-border overflow-y-auto">
+    <aside className="w-full lg:w-64 xl:w-72 flex-shrink-0 bg-bg-surface border-r border-border overflow-y-auto">
       <div className="p-4 space-y-6">
         {/* Sections Navigation */}
         <div>
