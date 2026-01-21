@@ -1,7 +1,7 @@
 import type { TemplateProps } from './types';
 import { formatDateRange } from './types';
 
-export function TemplateMinimal({ data }: TemplateProps) {
+export function TemplateMinimal({ data, accentColor }: TemplateProps) {
   const { personalInfo, summary, experience, education, skills, certifications, projects } = data;
 
   const hasContent = personalInfo.fullName || personalInfo.email;
@@ -10,7 +10,7 @@ export function TemplateMinimal({ data }: TemplateProps) {
     <div className="p-12 font-sans text-gray-700" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
       {/* Ultra minimal header */}
       <header className="mb-12">
-        <h1 className="text-3xl font-extralight text-gray-900 tracking-wide">
+        <h1 className="text-3xl font-extralight tracking-wide" style={{ color: accentColor.primary }}>
           {personalInfo.fullName || 'Your Name'}
         </h1>
         <div className="mt-4 text-sm text-gray-400 font-light">
@@ -40,7 +40,7 @@ export function TemplateMinimal({ data }: TemplateProps) {
       {/* Experience */}
       {experience.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-[10px] uppercase tracking-[0.25em] text-gray-300 mb-6">Experience</h2>
+          <h2 className="text-[10px] uppercase tracking-[0.25em] mb-6" style={{ color: accentColor.secondary }}>Experience</h2>
           <div className="space-y-8">
             {experience.map((exp) => (
               <div key={exp.id}>
@@ -71,7 +71,7 @@ export function TemplateMinimal({ data }: TemplateProps) {
       {/* Education */}
       {education.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-[10px] uppercase tracking-[0.25em] text-gray-300 mb-6">Education</h2>
+          <h2 className="text-[10px] uppercase tracking-[0.25em] mb-6" style={{ color: accentColor.secondary }}>Education</h2>
           <div className="space-y-4">
             {education.map((edu) => (
               <div key={edu.id}>
@@ -90,7 +90,7 @@ export function TemplateMinimal({ data }: TemplateProps) {
       {/* Skills - Simple comma list */}
       {skills.items.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-[10px] uppercase tracking-[0.25em] text-gray-300 mb-4">Skills</h2>
+          <h2 className="text-[10px] uppercase tracking-[0.25em] mb-4" style={{ color: accentColor.secondary }}>Skills</h2>
           <p className="text-sm text-gray-500 font-light">{skills.items.join('  ·  ')}</p>
         </section>
       )}
@@ -98,7 +98,7 @@ export function TemplateMinimal({ data }: TemplateProps) {
       {/* Certifications */}
       {certifications.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-[10px] uppercase tracking-[0.25em] text-gray-300 mb-4">Certifications</h2>
+          <h2 className="text-[10px] uppercase tracking-[0.25em] mb-4" style={{ color: accentColor.secondary }}>Certifications</h2>
           <div className="space-y-2">
             {certifications.map((cert) => (
               <div key={cert.id} className="text-sm">
@@ -114,7 +114,7 @@ export function TemplateMinimal({ data }: TemplateProps) {
       {/* Projects */}
       {projects.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-[10px] uppercase tracking-[0.25em] text-gray-300 mb-6">Projects</h2>
+          <h2 className="text-[10px] uppercase tracking-[0.25em] mb-6" style={{ color: accentColor.secondary }}>Projects</h2>
           <div className="space-y-4">
             {projects.map((project) => (
               <div key={project.id}>

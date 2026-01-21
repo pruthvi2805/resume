@@ -1,7 +1,7 @@
 import type { TemplateProps } from './types';
 import { formatDateRange } from './types';
 
-export function TemplateClassic({ data }: TemplateProps) {
+export function TemplateClassic({ data, accentColor }: TemplateProps) {
   const { personalInfo, summary, experience, education, skills, certifications, projects } = data;
 
   const hasContent = personalInfo.fullName || personalInfo.email;
@@ -9,7 +9,7 @@ export function TemplateClassic({ data }: TemplateProps) {
   return (
     <div className="p-8 font-serif text-gray-900 leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
       {/* Header */}
-      <header className="text-center border-b-2 border-gray-800 pb-4 mb-6">
+      <header className="text-center border-b-2 pb-4 mb-6" style={{ borderColor: accentColor.primary }}>
         <h1 className="text-2xl font-bold uppercase tracking-wide">
           {personalInfo.fullName || 'Your Name'}
         </h1>
@@ -31,7 +31,7 @@ export function TemplateClassic({ data }: TemplateProps) {
       {/* Summary */}
       {summary.text && (
         <section className="mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-3">
+          <h2 className="text-sm font-bold uppercase tracking-wider border-b pb-1 mb-3" style={{ borderColor: accentColor.secondary }}>
             Professional Summary
           </h2>
           <p className="text-sm">{summary.text}</p>
@@ -41,7 +41,7 @@ export function TemplateClassic({ data }: TemplateProps) {
       {/* Experience */}
       {experience.length > 0 && (
         <section className="mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-3">
+          <h2 className="text-sm font-bold uppercase tracking-wider border-b pb-1 mb-3" style={{ borderColor: accentColor.secondary }}>
             Professional Experience
           </h2>
           <div className="space-y-4">
@@ -72,7 +72,7 @@ export function TemplateClassic({ data }: TemplateProps) {
       {/* Education */}
       {education.length > 0 && (
         <section className="mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-3">
+          <h2 className="text-sm font-bold uppercase tracking-wider border-b pb-1 mb-3" style={{ borderColor: accentColor.secondary }}>
             Education
           </h2>
           <div className="space-y-3">
@@ -93,7 +93,7 @@ export function TemplateClassic({ data }: TemplateProps) {
       {/* Skills */}
       {skills.items.length > 0 && (
         <section className="mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-3">
+          <h2 className="text-sm font-bold uppercase tracking-wider border-b pb-1 mb-3" style={{ borderColor: accentColor.secondary }}>
             Skills
           </h2>
           <p className="text-sm">{skills.items.join(' • ')}</p>
@@ -103,7 +103,7 @@ export function TemplateClassic({ data }: TemplateProps) {
       {/* Certifications */}
       {certifications.length > 0 && (
         <section className="mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-3">
+          <h2 className="text-sm font-bold uppercase tracking-wider border-b pb-1 mb-3" style={{ borderColor: accentColor.secondary }}>
             Certifications
           </h2>
           <div className="space-y-2">
@@ -120,7 +120,7 @@ export function TemplateClassic({ data }: TemplateProps) {
       {/* Projects */}
       {projects.length > 0 && (
         <section className="mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider border-b border-gray-400 pb-1 mb-3">
+          <h2 className="text-sm font-bold uppercase tracking-wider border-b pb-1 mb-3" style={{ borderColor: accentColor.secondary }}>
             Projects
           </h2>
           <div className="space-y-3">

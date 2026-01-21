@@ -1,7 +1,7 @@
 import type { TemplateProps } from './types';
 import { formatDateRange } from './types';
 
-export function TemplateCompact({ data }: TemplateProps) {
+export function TemplateCompact({ data, accentColor }: TemplateProps) {
   const { personalInfo, summary, experience, education, skills, certifications, projects } = data;
 
   const hasContent = personalInfo.fullName || personalInfo.email;
@@ -9,8 +9,8 @@ export function TemplateCompact({ data }: TemplateProps) {
   return (
     <div className="p-6 font-sans text-gray-800 text-[13px]" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
       {/* Header - Compact */}
-      <header className="border-b border-gray-200 pb-3 mb-4">
-        <h1 className="text-xl font-bold text-gray-900">
+      <header className="border-b pb-3 mb-4" style={{ borderColor: accentColor.secondary + '60' }}>
+        <h1 className="text-xl font-bold" style={{ color: accentColor.primary }}>
           {personalInfo.fullName || 'Your Name'}
         </h1>
         <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-gray-600">
@@ -32,7 +32,7 @@ export function TemplateCompact({ data }: TemplateProps) {
           {/* Summary */}
           {summary.text && (
             <section className="mb-4">
-              <h2 className="text-xs font-bold uppercase text-gray-700 mb-1">Summary</h2>
+              <h2 className="text-xs font-bold uppercase mb-1" style={{ color: accentColor.primary }}>Summary</h2>
               <p className="text-gray-600 leading-relaxed">{summary.text}</p>
             </section>
           )}
@@ -40,7 +40,7 @@ export function TemplateCompact({ data }: TemplateProps) {
           {/* Experience */}
           {experience.length > 0 && (
             <section className="mb-4">
-              <h2 className="text-xs font-bold uppercase text-gray-700 mb-2">Experience</h2>
+              <h2 className="text-xs font-bold uppercase mb-2" style={{ color: accentColor.primary }}>Experience</h2>
               <div className="space-y-3">
                 {experience.map((exp) => (
                   <div key={exp.id}>
@@ -71,7 +71,7 @@ export function TemplateCompact({ data }: TemplateProps) {
           {/* Education */}
           {education.length > 0 && (
             <section className="mb-4">
-              <h2 className="text-xs font-bold uppercase text-gray-700 mb-2">Education</h2>
+              <h2 className="text-xs font-bold uppercase mb-2" style={{ color: accentColor.primary }}>Education</h2>
               <div className="space-y-2">
                 {education.map((edu) => (
                   <div key={edu.id} className="flex justify-between items-start gap-2">
@@ -90,7 +90,7 @@ export function TemplateCompact({ data }: TemplateProps) {
           {/* Projects */}
           {projects.length > 0 && (
             <section className="mb-4">
-              <h2 className="text-xs font-bold uppercase text-gray-700 mb-2">Projects</h2>
+              <h2 className="text-xs font-bold uppercase mb-2" style={{ color: accentColor.primary }}>Projects</h2>
               <div className="space-y-2">
                 {projects.map((project) => (
                   <div key={project.id}>
@@ -114,11 +114,11 @@ export function TemplateCompact({ data }: TemplateProps) {
 
         {/* Right Column - Skills & Certs */}
         {(skills.items.length > 0 || certifications.length > 0) && (
-          <div className="w-40 flex-shrink-0 border-l border-gray-200 pl-4">
+          <div className="w-40 flex-shrink-0 border-l pl-4" style={{ borderColor: accentColor.secondary + '40' }}>
             {/* Skills */}
             {skills.items.length > 0 && (
               <section className="mb-4">
-                <h2 className="text-xs font-bold uppercase text-gray-700 mb-2">Skills</h2>
+                <h2 className="text-xs font-bold uppercase mb-2" style={{ color: accentColor.primary }}>Skills</h2>
                 <div className="space-y-1">
                   {skills.items.map((skill, idx) => (
                     <div key={idx} className="text-gray-600">{skill}</div>
@@ -130,7 +130,7 @@ export function TemplateCompact({ data }: TemplateProps) {
             {/* Certifications */}
             {certifications.length > 0 && (
               <section className="mb-4">
-                <h2 className="text-xs font-bold uppercase text-gray-700 mb-2">Certifications</h2>
+                <h2 className="text-xs font-bold uppercase mb-2" style={{ color: accentColor.primary }}>Certifications</h2>
                 <div className="space-y-2">
                   {certifications.map((cert) => (
                     <div key={cert.id}>

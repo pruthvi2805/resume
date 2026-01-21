@@ -110,3 +110,14 @@ export type ActiveSection =
 
 // Theme
 export type Theme = 'light' | 'dark';
+
+// Resume Accent Colors
+export type AccentColorId = 'slate' | 'navy' | 'burgundy' | 'teal';
+
+export interface AccentColor {
+  id: AccentColorId;
+  name: string;
+  primary: string;    // Main accent (header bg, badges)
+  secondary: string;  // Lighter accent (borders, highlights)
+  text: string;       // Text on primary bg
+}

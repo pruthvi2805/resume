@@ -1,7 +1,8 @@
-import type { ResumeData } from '../../types';
+import type { ResumeData, AccentColor } from '../../types';
 
 export interface TemplateProps {
   data: ResumeData;
+  accentColor: AccentColor;
 }
 
 // Helper to format date for display

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { useResumeStore } from '../../stores/resumeStore';
-import { useUIStore } from '../../stores/uiStore';
+import { useUIStore, accentColors } from '../../stores/uiStore';
 import { TemplateClassic, TemplateModern, TemplateMinimal, TemplateCompact } from '../templates';
 import { ATSPreview } from './ATSPreview';
-import type { TemplateId, ResumeData } from '../../types';
+import type { TemplateId, ResumeData, AccentColorId } from '../../types';
 
 const templates: { id: TemplateId; label: string; style: React.CSSProperties }[] = [
   { id: 'classic', label: 'Classic', style: { fontFamily: 'Georgia, serif', fontWeight: 500 } },
@@ -95,9 +95,17 @@ function isResumeEmpty(data: ResumeData): boolean {
   return !hasName && !hasEmail && !hasSummary && !hasExperience;
 }
 
+// Color option buttons
+const colorOptions: { id: AccentColorId; label: string }[] = [
+  { id: 'slate', label: 'Slate' },
+  { id: 'navy', label: 'Navy' },
+  { id: 'burgundy', label: 'Burgundy' },
+  { id: 'teal', label: 'Teal' },
+];
+
 export function ResumePreview() {
   const { data } = useResumeStore();
-  const { viewMode, setViewMode, selectedTemplate, setTemplate } = useUIStore();
+  const { viewMode, setViewMode, selectedTemplate, setTemplate, accentColor, setAccentColor } = useUIStore();
 
   // Use sample data if resume is empty
   const displayData = useMemo(() => {
@@ -105,69 +113,93 @@ export function ResumePreview() {
   }, [data]);
 
   const isShowingSample = isResumeEmpty(data);
+  const currentAccent = accentColors[accentColor];
 
   const renderTemplate = () => {
     switch (selectedTemplate) {
       case 'classic':
-        return <TemplateClassic data={displayData} />;
+        return <TemplateClassic data={displayData} accentColor={currentAccent} />;
       case 'modern':
-        return <TemplateModern data={displayData} />;
+        return <TemplateModern data={displayData} accentColor={currentAccent} />;
       case 'minimal':
-        return <TemplateMinimal data={displayData} />;
+        return <TemplateMinimal data={displayData} accentColor={currentAccent} />;
       case 'compact':
-        return <TemplateCompact data={displayData} />;
+        return <TemplateCompact data={displayData} accentColor={currentAccent} />;
       default:
-        return <TemplateModern data={displayData} />;
+        return <TemplateModern data={displayData} accentColor={currentAccent} />;
     }
   };
 
   return (
     <div className="flex-1 flex flex-col bg-bg-hover/50 overflow-hidden print:overflow-visible print:bg-white">
       {/* Preview Header - Hidden when printing */}
-      <div className="flex items-center justify-between gap-2 px-3 py-2 bg-bg-surface border-b border-border print:hidden">
-        {/* Template Switcher with Label */}
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-text-muted hidden sm:inline">Template:</span>
-          <div className="flex items-center gap-1">
-            {templates.map((template) => (
-              <button
-                key={template.id}
-                onClick={() => setTemplate(template.id)}
-                className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
-                  selectedTemplate === template.id
-                    ? 'bg-accent text-white'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
-                }`}
-                style={template.style}
-              >
-                {template.label}
-              </button>
-            ))}
+      <div className="flex flex-col gap-2 px-3 py-2 bg-bg-surface border-b border-border print:hidden">
+        {/* Top row: Template and View Mode */}
+        <div className="flex items-center justify-between gap-2">
+          {/* Template Switcher with Label */}
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-text-muted hidden sm:inline">Template:</span>
+            <div className="flex items-center gap-1">
+              {templates.map((template) => (
+                <button
+                  key={template.id}
+                  onClick={() => setTemplate(template.id)}
+                  className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
+                    selectedTemplate === template.id
+                      ? 'bg-accent text-white'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
+                  }`}
+                  style={template.style}
+                >
+                  {template.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* View Mode Toggle - Improved visibility */}
+          <div className="flex items-center gap-1 p-0.5 bg-bg-primary rounded-lg border border-border">
+            <button
+              onClick={() => setViewMode('normal')}
+              className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
+                viewMode === 'normal'
+                  ? 'bg-accent text-white shadow-sm'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
+            >
+              Normal
+            </button>
+            <button
+              onClick={() => setViewMode('ats')}
+              className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
+                viewMode === 'ats'
+                  ? 'bg-accent text-white shadow-sm'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
+            >
+              ATS View
+            </button>
           </div>
         </div>
 
-        {/* View Mode Toggle - Improved visibility */}
-        <div className="flex items-center gap-1 p-0.5 bg-bg-primary rounded-lg border border-border">
-          <button
-            onClick={() => setViewMode('normal')}
-            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
-              viewMode === 'normal'
-                ? 'bg-accent text-white shadow-sm'
-                : 'text-text-secondary hover:text-text-primary'
-            }`}
-          >
-            Normal
-          </button>
-          <button
-            onClick={() => setViewMode('ats')}
-            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
-              viewMode === 'ats'
-                ? 'bg-accent text-white shadow-sm'
-                : 'text-text-secondary hover:text-text-primary'
-            }`}
-          >
-            ATS View
-          </button>
+        {/* Bottom row: Color Picker */}
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-text-muted">Color:</span>
+          <div className="flex items-center gap-1.5">
+            {colorOptions.map((color) => (
+              <button
+                key={color.id}
+                onClick={() => setAccentColor(color.id)}
+                className={`w-5 h-5 rounded-full transition-all ${
+                  accentColor === color.id
+                    ? 'ring-2 ring-offset-2 ring-offset-bg-surface ring-accent scale-110'
+                    : 'hover:scale-110'
+                }`}
+                style={{ backgroundColor: accentColors[color.id].primary }}
+                title={color.label}
+              />
+            ))}
+          </div>
         </div>
       </div>
 

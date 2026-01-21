@@ -1,11 +1,47 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { TemplateId, ViewMode, ActiveSection } from '../types';
+import type { TemplateId, ViewMode, ActiveSection, AccentColorId, AccentColor } from '../types';
+
+// Define accent color palette
+export const accentColors: Record<AccentColorId, AccentColor> = {
+  slate: {
+    id: 'slate',
+    name: 'Slate',
+    primary: '#334155',
+    secondary: '#64748b',
+    text: '#ffffff',
+  },
+  navy: {
+    id: 'navy',
+    name: 'Navy',
+    primary: '#1e3a5f',
+    secondary: '#3b82f6',
+    text: '#ffffff',
+  },
+  burgundy: {
+    id: 'burgundy',
+    name: 'Burgundy',
+    primary: '#7f1d1d',
+    secondary: '#b91c1c',
+    text: '#ffffff',
+  },
+  teal: {
+    id: 'teal',
+    name: 'Teal',
+    primary: '#0d9488',
+    secondary: '#14b8a6',
+    text: '#ffffff',
+  },
+};
 
 interface UIStore {
   // Template
   selectedTemplate: TemplateId;
   setTemplate: (template: TemplateId) => void;
+
+  // Accent color for templates
+  accentColor: AccentColorId;
+  setAccentColor: (color: AccentColorId) => void;
 
   // View mode (normal vs ATS)
   viewMode: ViewMode;
@@ -34,6 +70,10 @@ export const useUIStore = create<UIStore>()(
       selectedTemplate: 'modern',
       setTemplate: (template) => set({ selectedTemplate: template }),
 
+      // Accent color - default to slate
+      accentColor: 'slate',
+      setAccentColor: (color) => set({ accentColor: color }),
+
       // View mode
       viewMode: 'normal',
       setViewMode: (mode) => set({ viewMode: mode }),
@@ -61,6 +101,7 @@ export const useUIStore = create<UIStore>()(
       name: 'resume-builder-ui',
       partialize: (state) => ({
         selectedTemplate: state.selectedTemplate,
+        accentColor: state.accentColor,
         // Don't persist viewMode, activeSection, jobDescription, isJobMatcherOpen
       }),
     }

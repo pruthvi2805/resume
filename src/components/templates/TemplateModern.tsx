@@ -1,7 +1,7 @@
 import type { TemplateProps } from './types';
 import { formatDateRange } from './types';
 
-export function TemplateModern({ data }: TemplateProps) {
+export function TemplateModern({ data, accentColor }: TemplateProps) {
   const { personalInfo, summary, experience, education, skills, certifications, projects } = data;
 
   const hasContent = personalInfo.fullName || personalInfo.email;
@@ -9,17 +9,17 @@ export function TemplateModern({ data }: TemplateProps) {
   return (
     <div className="font-sans text-gray-800" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
       {/* Bold Header with accent stripe */}
-      <header className="bg-gray-900 text-white px-8 py-6">
+      <header className="px-8 py-6" style={{ backgroundColor: accentColor.primary, color: accentColor.text }}>
         <h1 className="text-2xl font-bold tracking-tight">
           {personalInfo.fullName || 'Your Name'}
         </h1>
-        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-300">
+        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm opacity-80">
           {personalInfo.email && <span>{personalInfo.email}</span>}
           {personalInfo.phone && <span>{personalInfo.phone}</span>}
           {personalInfo.location && <span>{personalInfo.location}</span>}
         </div>
         {(personalInfo.linkedinUrl || personalInfo.portfolioUrl) && (
-          <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-400">
+          <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm opacity-60">
             {personalInfo.linkedinUrl && (
               <span>{personalInfo.linkedinUrl.replace('https://', '').replace('www.', '')}</span>
             )}
@@ -34,7 +34,7 @@ export function TemplateModern({ data }: TemplateProps) {
         {/* Summary */}
         {summary.text && (
           <section className="mb-6">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">
+            <h2 className="text-xs font-bold uppercase tracking-widest mb-2 pb-1 border-b-2" style={{ color: accentColor.primary, borderColor: accentColor.primary }}>
               Summary
             </h2>
             <p className="text-sm leading-relaxed text-gray-700">{summary.text}</p>
@@ -44,12 +44,12 @@ export function TemplateModern({ data }: TemplateProps) {
         {/* Experience */}
         {experience.length > 0 && (
           <section className="mb-6">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-gray-900 mb-3 pb-1 border-b-2 border-gray-900">
+            <h2 className="text-xs font-bold uppercase tracking-widest mb-3 pb-1 border-b-2" style={{ color: accentColor.primary, borderColor: accentColor.primary }}>
               Experience
             </h2>
             <div className="space-y-4">
               {experience.map((exp) => (
-                <div key={exp.id} className="relative pl-4 border-l-2 border-gray-200">
+                <div key={exp.id} className="relative pl-4 border-l-2" style={{ borderColor: accentColor.secondary + '40' }}>
                   <div className="flex justify-between items-start flex-wrap gap-2">
                     <div>
                       <h3 className="font-bold text-sm text-gray-900">{exp.jobTitle}</h3>
@@ -77,7 +77,7 @@ export function TemplateModern({ data }: TemplateProps) {
         {/* Education */}
         {education.length > 0 && (
           <section className="mb-6">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-gray-900 mb-3 pb-1 border-b-2 border-gray-900">
+            <h2 className="text-xs font-bold uppercase tracking-widest mb-3 pb-1 border-b-2" style={{ color: accentColor.primary, borderColor: accentColor.primary }}>
               Education
             </h2>
             <div className="space-y-3">
@@ -102,14 +102,15 @@ export function TemplateModern({ data }: TemplateProps) {
         {/* Skills */}
         {skills.items.length > 0 && (
           <section className="mb-6">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-gray-900 mb-3 pb-1 border-b-2 border-gray-900">
+            <h2 className="text-xs font-bold uppercase tracking-widest mb-3 pb-1 border-b-2" style={{ color: accentColor.primary, borderColor: accentColor.primary }}>
               Skills
             </h2>
             <div className="flex flex-wrap gap-2">
               {skills.items.map((skill, idx) => (
                 <span
                   key={idx}
-                  className="px-2 py-1 text-xs font-medium rounded bg-gray-900 text-white"
+                  className="px-2 py-1 text-xs font-medium rounded"
+                  style={{ backgroundColor: accentColor.primary, color: accentColor.text }}
                 >
                   {skill}
                 </span>
@@ -121,7 +122,7 @@ export function TemplateModern({ data }: TemplateProps) {
         {/* Certifications */}
         {certifications.length > 0 && (
           <section className="mb-6">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-gray-900 mb-3 pb-1 border-b-2 border-gray-900">
+            <h2 className="text-xs font-bold uppercase tracking-widest mb-3 pb-1 border-b-2" style={{ color: accentColor.primary, borderColor: accentColor.primary }}>
               Certifications
             </h2>
             <div className="space-y-2">
@@ -145,12 +146,12 @@ export function TemplateModern({ data }: TemplateProps) {
         {/* Projects */}
         {projects.length > 0 && (
           <section className="mb-6">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-gray-900 mb-3 pb-1 border-b-2 border-gray-900">
+            <h2 className="text-xs font-bold uppercase tracking-widest mb-3 pb-1 border-b-2" style={{ color: accentColor.primary, borderColor: accentColor.primary }}>
               Projects
             </h2>
             <div className="space-y-3">
               {projects.map((project) => (
-                <div key={project.id} className="pl-4 border-l-2 border-gray-200">
+                <div key={project.id} className="pl-4 border-l-2" style={{ borderColor: accentColor.secondary + '40' }}>
                   <h3 className="font-bold text-sm text-gray-900">
                     {project.name}
                     {project.link && (
