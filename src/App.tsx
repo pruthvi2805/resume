@@ -1,30 +1,26 @@
-import { useThemeStore } from './stores';
+import { useState } from 'react';
+import { LandingPage } from './pages/LandingPage';
 
 function App() {
-  const { theme, toggleTheme } = useThemeStore();
+  const [isBuilderView, setIsBuilderView] = useState(false);
 
-  return (
-    <div className="min-h-screen bg-bg-primary text-text-primary">
-      {/* Temporary landing - will be replaced with proper pages */}
-      <div className="flex flex-col items-center justify-center min-h-screen p-8">
-        <h1 className="text-4xl font-bold mb-4">Resume Builder</h1>
-        <p className="text-text-secondary mb-8">
-          Resumes that get past the robots.
-        </p>
-        <div className="flex gap-4">
-          <button
-            onClick={toggleTheme}
-            className="px-4 py-2 bg-bg-surface border border-border rounded-md hover:bg-bg-hover transition-colors"
-          >
-            Toggle Theme ({theme})
-          </button>
-        </div>
-        <p className="mt-8 text-text-muted text-sm">
-          Phase 1 Setup Complete - Ready for Phase 2
-        </p>
+  if (isBuilderView) {
+    // Builder view - will be implemented in Phase 3
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-bg-primary text-text-primary p-8">
+        <h1 className="text-2xl font-bold mb-4">Resume Builder</h1>
+        <p className="text-text-secondary mb-8">Builder interface coming in Phase 3</p>
+        <button
+          onClick={() => setIsBuilderView(false)}
+          className="px-6 py-2 bg-accent hover:bg-accent-hover text-white rounded-lg transition-colors"
+        >
+          Back to Home
+        </button>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return <LandingPage onStartBuilder={() => setIsBuilderView(true)} />;
 }
 
 export default App;
