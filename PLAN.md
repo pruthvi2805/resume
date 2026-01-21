@@ -2,7 +2,7 @@
 
 > **Domain:** resume.kpruthvi.com
 > **Repo:** https://github.com/pruthvi2805/resume
-> **Status:** Phase 3 Complete - Builder Layout Done
+> **Status:** Phase 4 Complete - Form Components Done
 > **Last Updated:** 2026-01-21
 
 ---
@@ -467,17 +467,17 @@ resume/
 - [x] Create header with ATS score and download button
 - [x] Responsive design (stack on mobile)
 
-### Phase 4: Form Components
-- [ ] Create reusable Input, Textarea, Select components
-- [ ] Create PersonalInfoForm
-- [ ] Create SummaryForm
-- [ ] Create ExperienceForm (with add/remove entries)
-- [ ] Create EducationForm (with add/remove entries)
-- [ ] Create SkillsForm
-- [ ] Create CertificationsForm (optional section)
-- [ ] Create ProjectsForm (optional section)
-- [ ] Wire forms to Zustand store
-- [ ] Add form validation
+### Phase 4: Form Components ✅
+- [x] Create reusable Input, Textarea, Checkbox components
+- [x] Create PersonalInfoForm
+- [x] Create SummaryForm
+- [x] Create ExperienceForm (with add/remove entries)
+- [x] Create EducationForm (with add/remove entries)
+- [x] Create SkillsForm
+- [x] Create CertificationsForm (optional section)
+- [x] Create ProjectsForm (optional section)
+- [x] Wire forms to Zustand store
+- [x] Update BuilderPage to render active form
 
 ### Phase 5: Resume Templates
 - [ ] Create TemplateClassic
@@ -565,8 +565,16 @@ resume/
   - Responsive mobile layout with sidebar toggle
   - Home link fixed to use correct base path
 
+- [x] **Phase 4 Complete:**
+  - Reusable UI components (Input, Textarea, Checkbox)
+  - All 7 form components built and wired to Zustand store
+  - Forms auto-persist to localStorage
+  - Experience/Education/Certifications/Projects support add/remove
+  - Skills form with tag-style input (Enter/comma to add)
+  - Summary form with character count guidance
+
 ### Next Steps
-- Start Phase 4: Form Components
+- Start Phase 5: Resume Templates
 
 ---
 
