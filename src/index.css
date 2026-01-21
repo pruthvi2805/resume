@@ -236,3 +236,31 @@ select {
 .border-3 {
   border-width: 3px;
 }
+
+/* ==================== PAGE LOAD ANIMATION ==================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease both;
+}
+
+/* Apply fade-in to main app container */
+#root > div {
+  animation: fadeIn 0.3s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #root > div,
+  .animate-fadeIn {
+    animation: none;
+  }
+}
