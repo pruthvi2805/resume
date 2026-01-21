@@ -207,3 +207,32 @@ select {
 .animate-gentle-bounce {
   animation: gentle-bounce 1.5s ease-in-out infinite;
 }
+
+/* Hide scrollbar for horizontal scroll containers */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Touch feedback for mobile */
+@media (hover: none) and (pointer: coarse) {
+  button:active,
+  a:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+}
+
+/* Scale utility */
+.active\:scale-98:active {
+  transform: scale(0.98);
+}
+
+/* Border width 3 for color swatches */
+.border-3 {
+  border-width: 3px;
+}

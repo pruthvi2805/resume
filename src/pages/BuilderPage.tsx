@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { BuilderHeader } from '../components/layout/BuilderHeader';
 import { Sidebar } from '../components/layout/Sidebar';
-import { MobileNav } from '../components/layout/MobileNav';
+import { MobileBottomSheet } from '../components/layout/MobileBottomSheet';
 import { ResumePreview } from '../components/preview/ResumePreview';
+import { MobilePreview } from '../components/preview/MobilePreview';
+import { MobileFAB } from '../components/ui/MobileFAB';
+import { useResumeStore } from '../stores/resumeStore';
+import { calculateATSScore } from '../utils/atsScorer';
 import {
   PersonalInfoForm,
   SummaryForm,
@@ -41,49 +45,90 @@ function renderForm(section: string) {
   }
 }
 
+// Check if resume has enough data for PDF export
+function canExportPDF(data: ReturnType<typeof useResumeStore.getState>['data']): boolean {
+  return (
+    data.personalInfo.fullName.trim().length > 0 &&
+    data.personalInfo.email.trim().length > 0
+  );
+}
+
 export function BuilderPage({ onBack }: BuilderPageProps) {
   const [activeSection, setActiveSection] = useState('personal');
   const [mobileView, setMobileView] = useState<'edit' | 'preview'>('edit');
+  const { data } = useResumeStore();
+
+  const atsScore = calculateATSScore(data).overall;
+  const canDownload = canExportPDF(data);
+
+  const handleDownload = () => {
+    window.print();
+  };
 
   return (
     <div className="h-dvh max-h-screen flex flex-col bg-bg-primary overflow-hidden">
       <BuilderHeader onBack={onBack} />
 
-      <div className="flex-1 flex min-h-0 overflow-hidden print:overflow-visible">
-        {/* Sidebar - Hidden on mobile, visible on lg+, hidden when printing */}
-        <div className="hidden lg:block print:hidden">
+      {/* Desktop Layout */}
+      <div className="hidden lg:flex flex-1 min-h-0 overflow-hidden print:overflow-visible">
+        {/* Sidebar */}
+        <div className="print:hidden">
           <Sidebar
             activeSection={activeSection}
             onSectionChange={setActiveSection}
           />
         </div>
 
-        {/* Main Content Area */}
-        <main className="flex-1 flex flex-col lg:flex-row overflow-hidden print:overflow-visible print:block">
-          {/* Form Area - Shows based on mobileView on mobile, always on lg+ */}
-          <div className={`w-full lg:w-[400px] xl:w-[420px] flex-shrink-0 border-b lg:border-b-0 lg:border-r border-border bg-bg-surface overflow-y-auto print:hidden pb-28 lg:pb-0 ${
-            mobileView === 'edit' ? 'block' : 'hidden lg:block'
-          }`}>
-            <div className="p-4 lg:p-6">
+        {/* Main Content */}
+        <main className="flex-1 flex overflow-hidden print:overflow-visible print:block">
+          {/* Form Area */}
+          <div className="w-[400px] xl:w-[420px] flex-shrink-0 border-r border-border bg-bg-surface overflow-y-auto print:hidden">
+            <div className="p-6">
               {renderForm(activeSection)}
             </div>
           </div>
 
-          {/* Preview Area - Shows based on mobileView on mobile, always on lg+ */}
-          <div className={`flex-1 print:flex print:w-full pb-28 lg:pb-0 ${
-            mobileView === 'preview' ? 'flex' : 'hidden lg:flex'
-          }`}>
+          {/* Preview Area */}
+          <div className="flex-1 print:flex print:w-full">
             <ResumePreview />
           </div>
         </main>
       </div>
 
+      {/* Mobile Layout */}
+      <div className="lg:hidden flex-1 flex flex-col min-h-0 overflow-hidden">
+        {/* Animated View Container */}
+        <div
+          className="flex-1 flex transition-transform duration-300 ease-out"
+          style={{
+            width: '200%',
+            transform: mobileView === 'preview' ? 'translateX(-50%)' : 'translateX(0)',
+          }}
+        >
+          {/* Edit View */}
+          <div className="w-1/2 h-full overflow-y-auto bg-bg-surface pb-[140px]">
+            <div className="p-4">
+              {renderForm(activeSection)}
+            </div>
+          </div>
+
+          {/* Preview View */}
+          <div className="w-1/2 h-full pb-[140px]">
+            <MobilePreview />
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile FAB - Settings */}
+      <MobileFAB onDownload={handleDownload} canDownload={canDownload} />
+
       {/* Mobile Bottom Navigation */}
-      <MobileNav
+      <MobileBottomSheet
         activeSection={activeSection}
         onSectionChange={setActiveSection}
         activeView={mobileView}
         onViewChange={setMobileView}
+        atsScore={atsScore}
       />
     </div>
   );
