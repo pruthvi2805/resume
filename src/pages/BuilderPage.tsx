@@ -4,7 +4,6 @@ import { Sidebar } from '../components/layout/Sidebar';
 import { MobileBottomSheet } from '../components/layout/MobileBottomSheet';
 import { ResumePreview } from '../components/preview/ResumePreview';
 import { MobilePreview } from '../components/preview/MobilePreview';
-import { MobileFAB } from '../components/ui/MobileFAB';
 import { useResumeStore } from '../stores/resumeStore';
 import { calculateATSScore } from '../utils/atsScorer';
 import {
@@ -45,25 +44,12 @@ function renderForm(section: string) {
   }
 }
 
-// Check if resume has enough data for PDF export
-function canExportPDF(data: ReturnType<typeof useResumeStore.getState>['data']): boolean {
-  return (
-    data.personalInfo.fullName.trim().length > 0 &&
-    data.personalInfo.email.trim().length > 0
-  );
-}
-
 export function BuilderPage({ onBack }: BuilderPageProps) {
   const [activeSection, setActiveSection] = useState('personal');
   const [mobileView, setMobileView] = useState<'edit' | 'preview'>('edit');
   const { data } = useResumeStore();
 
   const atsScore = calculateATSScore(data).overall;
-  const canDownload = canExportPDF(data);
-
-  const handleDownload = () => {
-    window.print();
-  };
 
   return (
     <div className="h-dvh max-h-screen flex flex-col bg-bg-primary overflow-hidden">
@@ -105,22 +91,19 @@ export function BuilderPage({ onBack }: BuilderPageProps) {
             transform: mobileView === 'preview' ? 'translateX(-50%)' : 'translateX(0)',
           }}
         >
-          {/* Edit View - more padding for section pills */}
-          <div className="w-1/2 h-full overflow-y-auto bg-bg-surface pb-[180px]">
+          {/* Edit View - more padding for bottom sheet */}
+          <div className="w-1/2 h-full overflow-y-auto bg-bg-surface pb-[220px]">
             <div className="p-4">
               {renderForm(activeSection)}
             </div>
           </div>
 
-          {/* Preview View - less padding, no section pills */}
-          <div className="w-1/2 h-full pb-[100px]">
+          {/* Preview View - padding for bottom sheet with controls */}
+          <div className="w-1/2 h-full pb-[180px]">
             <MobilePreview />
           </div>
         </div>
       </div>
-
-      {/* Mobile FAB - Settings (only on preview) */}
-      <MobileFAB onDownload={handleDownload} canDownload={canDownload} visible={mobileView === 'preview'} />
 
       {/* Mobile Bottom Navigation */}
       <MobileBottomSheet

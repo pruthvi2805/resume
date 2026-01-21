@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { useUIStore, accentColors } from '../../stores/uiStore';
+import type { TemplateId, AccentColorId } from '../../types';
 
 interface MobileBottomSheetProps {
   activeSection: string;
@@ -7,6 +9,22 @@ interface MobileBottomSheetProps {
   onViewChange: (view: 'edit' | 'preview') => void;
   atsScore?: number;
 }
+
+const templates: { id: TemplateId; label: string }[] = [
+  { id: 'classic', label: 'Classic' },
+  { id: 'modern', label: 'Modern' },
+  { id: 'minimal', label: 'Minimal' },
+  { id: 'compact', label: 'Compact' },
+  { id: 'executive', label: 'Executive' },
+  { id: 'technical', label: 'Technical' },
+];
+
+const colorOptions: { id: AccentColorId; label: string }[] = [
+  { id: 'slate', label: 'Slate' },
+  { id: 'navy', label: 'Navy' },
+  { id: 'burgundy', label: 'Burgundy' },
+  { id: 'teal', label: 'Teal' },
+];
 
 // All sections - no hidden "More" menu
 const allSections = [
@@ -71,6 +89,7 @@ export function MobileBottomSheet({
 }: MobileBottomSheetProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { selectedTemplate, setTemplate, accentColor, setAccentColor, viewMode, setViewMode } = useUIStore();
 
   // Scroll active section into view
   useEffect(() => {
@@ -149,9 +168,70 @@ export function MobileBottomSheet({
         </div>
       )}
 
-      {/* Preview mode: Just show some bottom padding */}
-      {!isExpanded && activeView === 'preview' && (
-        <div className="pb-2" />
+      {/* Preview mode: Template, Color, View Mode controls */}
+      {activeView === 'preview' && (
+        <div className="px-3 pb-3 space-y-3">
+          {/* Template Picker - Horizontal scroll */}
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+            {templates.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setTemplate(t.id)}
+                className={`px-3 py-2 text-xs font-medium rounded-lg min-h-[40px] whitespace-nowrap flex-shrink-0 transition-all ${
+                  selectedTemplate === t.id
+                    ? 'bg-accent text-white'
+                    : 'bg-bg-hover text-text-primary'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Color + View Mode row */}
+          <div className="flex items-center justify-between gap-3">
+            {/* Colors */}
+            <div className="flex gap-2">
+              {colorOptions.map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => setAccentColor(c.id)}
+                  className={`w-8 h-8 rounded-full border-2 transition-all ${
+                    accentColor === c.id
+                      ? 'border-text-primary scale-110'
+                      : 'border-transparent'
+                  }`}
+                  style={{ backgroundColor: accentColors[c.id].primary }}
+                  title={c.label}
+                />
+              ))}
+            </div>
+
+            {/* View Mode Toggle */}
+            <div className="flex gap-1 bg-bg-primary rounded-lg p-1">
+              <button
+                onClick={() => setViewMode('normal')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                  viewMode === 'normal'
+                    ? 'bg-accent text-white'
+                    : 'text-text-secondary'
+                }`}
+              >
+                Normal
+              </button>
+              <button
+                onClick={() => setViewMode('ats')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                  viewMode === 'ats'
+                    ? 'bg-accent text-white'
+                    : 'text-text-secondary'
+                }`}
+              >
+                ATS
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Expanded: Full grid + ATS Score - Only on Edit view */}
