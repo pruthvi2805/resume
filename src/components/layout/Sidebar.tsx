@@ -45,9 +45,15 @@ const icons = {
       <path d="M12 8v8M8 12h8" />
     </svg>
   ),
+  jobMatcher: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.3-4.3" />
+    </svg>
+  ),
 };
 
-const sections = [
+const resumeSections = [
   { id: 'personal', label: 'Personal Info', icon: icons.personal },
   { id: 'summary', label: 'Summary', icon: icons.summary },
   { id: 'experience', label: 'Experience', icon: icons.experience },
@@ -55,6 +61,10 @@ const sections = [
   { id: 'skills', label: 'Skills', icon: icons.skills },
   { id: 'certifications', label: 'Certifications', icon: icons.certifications },
   { id: 'projects', label: 'Projects', icon: icons.projects },
+];
+
+const toolSections = [
+  { id: 'job-matcher', label: 'Job Matcher', icon: icons.jobMatcher },
 ];
 
 interface SidebarProps {
@@ -65,10 +75,10 @@ interface SidebarProps {
 export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
   return (
     <aside className="w-16 flex-shrink-0 bg-bg-surface border-r border-border overflow-y-auto">
-      <div className="p-2 space-y-4">
-        {/* Sections Navigation - Icons only */}
+      <div className="p-2 space-y-2">
+        {/* Resume Sections */}
         <nav className="space-y-1">
-          {sections.map((section) => (
+          {resumeSections.map((section) => (
             <button
               key={section.id}
               onClick={() => onSectionChange(section.id)}
@@ -84,6 +94,26 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
           ))}
         </nav>
 
+        {/* Divider */}
+        <hr className="border-border" />
+
+        {/* Tools */}
+        <nav className="space-y-1">
+          {toolSections.map((section) => (
+            <button
+              key={section.id}
+              onClick={() => onSectionChange(section.id)}
+              title={section.label}
+              className={`w-full flex items-center justify-center p-3 rounded-lg transition-colors ${
+                activeSection === section.id
+                  ? 'bg-accent/10 text-accent'
+                  : 'text-text-primary hover:bg-bg-hover'
+              }`}
+            >
+              {section.icon}
+            </button>
+          ))}
+        </nav>
       </div>
     </aside>
   );

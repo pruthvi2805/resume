@@ -11,6 +11,7 @@ import {
   SkillsForm,
   CertificationsForm,
   ProjectsForm,
+  JobMatcherForm,
 } from '../components/forms';
 
 interface BuilderPageProps {
@@ -33,6 +34,8 @@ function renderForm(section: string) {
       return <CertificationsForm />;
     case 'projects':
       return <ProjectsForm />;
+    case 'job-matcher':
+      return <JobMatcherForm />;
     default:
       return <PersonalInfoForm />;
   }

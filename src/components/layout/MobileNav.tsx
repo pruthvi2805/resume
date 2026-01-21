@@ -50,6 +50,7 @@ const sections = [
 const moreSections = [
   { id: 'certifications', label: 'Certifications' },
   { id: 'projects', label: 'Projects' },
+  { id: 'job-matcher', label: 'Job Matcher' },
 ];
 
 export function MobileNav({ activeSection, onSectionChange, activeView, onViewChange }: MobileNavProps) {
