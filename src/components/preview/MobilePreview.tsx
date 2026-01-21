@@ -110,11 +110,11 @@ export function MobilePreview() {
   return (
     <div
       ref={containerRef}
-      className="h-full overflow-y-auto bg-bg-hover/50 flex flex-col"
+      className="h-full min-h-0 overflow-y-auto bg-bg-hover/50"
     >
       {/* Sample Data Banner */}
       {isShowingSample && (
-        <div className="px-3 py-2 bg-accent/10 border-b border-accent/20 text-center flex-shrink-0">
+        <div className="px-3 py-2 bg-accent/10 border-b border-accent/20 text-center">
           <span className="text-xs text-accent">
             Preview with sample data
           </span>
@@ -122,7 +122,7 @@ export function MobilePreview() {
       )}
 
       {/* Scaled Preview */}
-      <div className="flex-1 flex justify-center py-3 px-3 overflow-y-auto">
+      <div className="flex justify-center py-3 px-3">
         <div
           className="origin-top"
           style={{
@@ -140,7 +140,7 @@ export function MobilePreview() {
 
       {/* ATS View Hint */}
       {viewMode === 'ats' && (
-        <div className="px-3 py-2 bg-bg-surface border-t border-border text-center flex-shrink-0">
+        <div className="px-3 py-2 bg-bg-surface border-t border-border text-center">
           <span className="text-xs text-text-muted">
             ATS View - How tracking systems see your resume
           </span>
@@ -148,7 +148,7 @@ export function MobilePreview() {
       )}
 
       {/* Spacer for bottom sheet */}
-      <div className="h-[160px] flex-shrink-0" />
+      <div className="h-[200px]" />
     </div>
   );
 }

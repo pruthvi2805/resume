@@ -82,26 +82,24 @@ export function BuilderPage({ onBack }: BuilderPageProps) {
       </div>
 
       {/* Mobile Layout */}
-      <div className="lg:hidden flex-1 flex flex-col min-h-0 overflow-hidden">
+      <div className="lg:hidden flex-1 flex flex-col min-h-0">
         {/* Animated View Container */}
         <div
-          className="flex-1 flex transition-transform duration-300 ease-out"
+          className="flex-1 flex min-h-0 transition-transform duration-300 ease-out"
           style={{
             width: '200%',
             transform: mobileView === 'preview' ? 'translateX(-50%)' : 'translateX(0)',
           }}
         >
           {/* Edit View */}
-          <div className="w-1/2 h-full overflow-y-auto bg-bg-surface">
-            <div className="p-4">
+          <div className="w-1/2 min-h-0 overflow-y-auto bg-bg-surface">
+            <div className="p-4 pb-[200px]">
               {renderForm(activeSection)}
             </div>
-            {/* Spacer for bottom sheet */}
-            <div className="h-[180px] flex-shrink-0" />
           </div>
 
           {/* Preview View */}
-          <div className="w-1/2 h-full">
+          <div className="w-1/2 min-h-0">
             <MobilePreview />
           </div>
         </div>
