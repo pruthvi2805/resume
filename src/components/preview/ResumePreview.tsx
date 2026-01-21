@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useResumeStore } from '../../stores/resumeStore';
 import { useUIStore, accentColors } from '../../stores/uiStore';
-import { TemplateClassic, TemplateModern, TemplateMinimal, TemplateCompact } from '../templates';
+import { TemplateClassic, TemplateModern, TemplateMinimal, TemplateCompact, TemplateExecutive, TemplateTechnical } from '../templates';
 import { ATSPreview } from './ATSPreview';
 import type { TemplateId, ResumeData, AccentColorId } from '../../types';
 
@@ -10,6 +10,8 @@ const templates: { id: TemplateId; label: string; style: React.CSSProperties }[]
   { id: 'modern', label: 'Modern', style: { fontFamily: 'system-ui, sans-serif', fontWeight: 700, letterSpacing: '-0.02em' } },
   { id: 'minimal', label: 'Minimal', style: { fontFamily: 'system-ui, sans-serif', fontWeight: 300, letterSpacing: '0.02em' } },
   { id: 'compact', label: 'Compact', style: { fontFamily: 'system-ui, sans-serif', fontWeight: 500, fontSize: '10px' } },
+  { id: 'executive', label: 'Executive', style: { fontFamily: 'system-ui, sans-serif', fontWeight: 500 } },
+  { id: 'technical', label: 'Technical', style: { fontFamily: 'monospace', fontWeight: 500, letterSpacing: '-0.02em' } },
 ];
 
 // Sample data to show when resume is empty
@@ -125,6 +127,10 @@ export function ResumePreview() {
         return <TemplateMinimal data={displayData} accentColor={currentAccent} />;
       case 'compact':
         return <TemplateCompact data={displayData} accentColor={currentAccent} />;
+      case 'executive':
+        return <TemplateExecutive data={displayData} accentColor={currentAccent} />;
+      case 'technical':
+        return <TemplateTechnical data={displayData} accentColor={currentAccent} />;
       default:
         return <TemplateModern data={displayData} accentColor={currentAccent} />;
     }

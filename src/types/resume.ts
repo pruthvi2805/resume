@@ -67,7 +67,7 @@ export interface ResumeData {
 }
 
 // Template Types
-export type TemplateId = 'classic' | 'modern' | 'minimal' | 'compact';
+export type TemplateId = 'classic' | 'modern' | 'minimal' | 'compact' | 'executive' | 'technical';
 
 export interface Template {
   id: TemplateId;
