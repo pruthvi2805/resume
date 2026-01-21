@@ -1,4 +1,7 @@
+import { useMemo, useState } from 'react';
 import { useUIStore } from '../../stores/uiStore';
+import { useResumeStore } from '../../stores/resumeStore';
+import { calculateJobMatch } from '../../utils/keywordExtractor';
 import type { TemplateId } from '../../types';
 
 const sections = [
@@ -25,6 +28,20 @@ interface SidebarProps {
 
 export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
   const { selectedTemplate, setTemplate, jobDescription, setJobDescription } = useUIStore();
+  const { data } = useResumeStore();
+  const [showAllMissing, setShowAllMissing] = useState(false);
+
+  // Calculate job match when job description or resume data changes
+  const matchResult = useMemo(() => {
+    return calculateJobMatch(data, jobDescription);
+  }, [data, jobDescription]);
+
+  const getMatchColor = (percentage: number) => {
+    if (percentage >= 70) return 'text-green-500';
+    if (percentage >= 50) return 'text-yellow-500';
+    if (percentage >= 30) return 'text-orange-500';
+    return 'text-red-500';
+  };
 
   return (
     <aside className="w-full lg:w-72 flex-shrink-0 bg-bg-surface border-r border-border overflow-y-auto">
@@ -92,14 +109,83 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
             className="w-full h-24 px-3 py-2 text-sm bg-bg-primary border border-border rounded-lg resize-none placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent"
           />
           {jobDescription && (
-            <div className="mt-3 p-3 bg-bg-primary border border-border rounded-lg">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-text-secondary">Match Score</span>
-                <span className="text-sm font-semibold text-text-muted">--%</span>
+            <div className="mt-3 space-y-3">
+              {/* Match Score */}
+              <div className="p-3 bg-bg-primary border border-border rounded-lg">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs text-text-secondary">Match Score</span>
+                  <span className={`text-lg font-bold ${getMatchColor(matchResult.matchPercentage)}`}>
+                    {matchResult.matchPercentage}%
+                  </span>
+                </div>
+                <div className="h-2 bg-bg-hover rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-accent rounded-full transition-all duration-300"
+                    style={{ width: `${matchResult.matchPercentage}%` }}
+                  />
+                </div>
               </div>
-              <p className="text-xs text-text-muted">
-                Complete your resume to see match results
-              </p>
+
+              {/* Found Keywords */}
+              {matchResult.foundKeywords.length > 0 && (
+                <div>
+                  <h4 className="text-xs text-text-secondary mb-2">
+                    Found ({matchResult.foundKeywords.length})
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    {matchResult.foundKeywords.slice(0, 8).map((keyword, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2 py-0.5 text-xs bg-green-500/10 text-green-600 dark:text-green-400 rounded"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                    {matchResult.foundKeywords.length > 8 && (
+                      <span className="px-2 py-0.5 text-xs text-text-muted">
+                        +{matchResult.foundKeywords.length - 8} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Missing Keywords */}
+              {matchResult.missingKeywords.length > 0 && (
+                <div>
+                  <h4 className="text-xs text-text-secondary mb-2">
+                    Missing ({matchResult.missingKeywords.length})
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    {(showAllMissing ? matchResult.missingKeywords : matchResult.missingKeywords.slice(0, 6)).map((keyword, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2 py-0.5 text-xs bg-red-500/10 text-red-600 dark:text-red-400 rounded"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                  {matchResult.missingKeywords.length > 6 && (
+                    <button
+                      onClick={() => setShowAllMissing(!showAllMissing)}
+                      className="mt-2 text-xs text-accent hover:underline"
+                    >
+                      {showAllMissing ? 'Show less' : `Show all ${matchResult.missingKeywords.length}`}
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {/* Suggestions */}
+              {matchResult.suggestions.length > 0 && (
+                <div className="p-2 bg-accent/5 border border-accent/20 rounded-lg">
+                  <h4 className="text-xs font-medium text-accent mb-1">Tip</h4>
+                  <p className="text-xs text-text-secondary">
+                    {matchResult.suggestions[0]}
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -1,4 +1,5 @@
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { ATSScore } from '../ats';
 
 interface BuilderHeaderProps {
   onBack: () => void;
@@ -14,18 +15,23 @@ export function BuilderHeader({ onBack }: BuilderHeaderProps) {
             onClick={onBack}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            <span className="w-8 h-8 flex items-center justify-center bg-accent text-white text-sm font-bold rounded-md">
-              RB
-            </span>
+            <svg width="28" height="28" viewBox="0 0 32 32" className="flex-shrink-0">
+              <rect x="4" y="2" width="20" height="26" rx="2" className="fill-bg-surface stroke-accent" strokeWidth="1.5"/>
+              <rect x="7" y="6" width="10" height="2" rx="0.5" className="fill-accent"/>
+              <rect x="7" y="10" width="14" height="1.5" rx="0.5" className="fill-text-muted"/>
+              <rect x="7" y="13" width="14" height="1.5" rx="0.5" className="fill-text-muted"/>
+              <rect x="7" y="16" width="10" height="1.5" rx="0.5" className="fill-text-muted"/>
+              <rect x="7" y="20" width="14" height="1.5" rx="0.5" className="fill-text-muted"/>
+              <rect x="7" y="23" width="8" height="1.5" rx="0.5" className="fill-text-muted"/>
+              <circle cx="24" cy="24" r="7" className="fill-accent"/>
+              <path d="M21 24l2 2 4-4" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
             <span className="font-semibold text-text-primary">Resume Builder</span>
           </button>
 
           {/* Center: ATS Score */}
           <div className="hidden sm:flex items-center gap-2">
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-bg-surface border border-border rounded-lg">
-              <span className="text-sm text-text-secondary">ATS Score:</span>
-              <span className="text-sm font-semibold text-accent">--/100</span>
-            </div>
+            <ATSScore />
           </div>
 
           {/* Right: Actions */}

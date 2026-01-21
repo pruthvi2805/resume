@@ -7,9 +7,17 @@ export function Header() {
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
           <a href={import.meta.env.BASE_URL} className="flex items-center gap-2">
-            <span className="w-8 h-8 flex items-center justify-center bg-accent text-white text-sm font-bold rounded-md">
-              RB
-            </span>
+            <svg width="28" height="28" viewBox="0 0 32 32" className="flex-shrink-0">
+              <rect x="4" y="2" width="20" height="26" rx="2" className="fill-bg-surface stroke-accent" strokeWidth="1.5"/>
+              <rect x="7" y="6" width="10" height="2" rx="0.5" className="fill-accent"/>
+              <rect x="7" y="10" width="14" height="1.5" rx="0.5" className="fill-text-muted"/>
+              <rect x="7" y="13" width="14" height="1.5" rx="0.5" className="fill-text-muted"/>
+              <rect x="7" y="16" width="10" height="1.5" rx="0.5" className="fill-text-muted"/>
+              <rect x="7" y="20" width="14" height="1.5" rx="0.5" className="fill-text-muted"/>
+              <rect x="7" y="23" width="8" height="1.5" rx="0.5" className="fill-text-muted"/>
+              <circle cx="24" cy="24" r="7" className="fill-accent"/>
+              <path d="M21 24l2 2 4-4" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
             <span className="font-semibold text-text-primary">Resume Builder</span>
           </a>
 
