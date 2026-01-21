@@ -163,11 +163,12 @@ export function HeroProductDemo({ onStartFresh }: HeroProductDemoProps) {
         </div>
       </div>
 
-      {/* Fixed scroll indicator at bottom - hides when scrolled */}
+      {/* Subtle scroll indicator - hidden on mobile, hides after scroll/click */}
       {showScrollHint && (
         <div
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 px-5 py-2.5 bg-bg-surface/95 backdrop-blur-sm border border-border rounded-full shadow-lg cursor-pointer hover:bg-bg-hover hover:border-accent/30 transition-all"
+          className="hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 items-center gap-1.5 px-3 py-1.5 text-text-muted hover:text-text-secondary cursor-pointer transition-colors opacity-60 hover:opacity-100"
           onClick={() => {
+            setShowScrollHint(false);
             const el = document.getElementById('features-bar');
             if (el) {
               const headerHeight = 56;
@@ -176,8 +177,8 @@ export function HeroProductDemo({ onStartFresh }: HeroProductDemoProps) {
             }
           }}
         >
-          <span className="text-sm font-medium text-text-primary">Scroll to learn more</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-accent animate-gentle-bounce">
+          <span className="text-xs">Scroll</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="animate-gentle-bounce">
             <path d="M6 9l6 6 6-6" />
           </svg>
         </div>
