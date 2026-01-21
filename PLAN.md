@@ -2,7 +2,7 @@
 
 > **Domain:** resume.kpruthvi.com
 > **Repo:** https://github.com/pruthvi2805/resume
-> **Status:** Phase 4 Complete - Form Components Done
+> **Status:** Phase 6 Complete - Live Preview Working
 > **Last Updated:** 2026-01-21
 
 ---
@@ -479,22 +479,22 @@ resume/
 - [x] Wire forms to Zustand store
 - [x] Update BuilderPage to render active form
 
-### Phase 5: Resume Templates
-- [ ] Create TemplateClassic
-- [ ] Create TemplateModern
-- [ ] Create TemplateMinimal
-- [ ] Create TemplateCompact
-- [ ] Create TemplateSwitcher component
-- [ ] Wire template selection to store
-- [ ] Ensure all templates are ATS-friendly
+### Phase 5: Resume Templates ✅
+- [x] Create TemplateClassic
+- [x] Create TemplateModern
+- [x] Create TemplateMinimal
+- [x] Create TemplateCompact
+- [x] Create ATSPreview component
+- [x] Wire template selection to uiStore
+- [x] All templates are ATS-friendly
 
-### Phase 6: Live Preview
-- [ ] Create ResumePreview component
-- [ ] Connect preview to Zustand store
-- [ ] Implement real-time updates
-- [ ] Add preview scrolling
-- [ ] Create ATSPreview (plain text view)
-- [ ] Create PreviewToggle (Normal/ATS view switch)
+### Phase 6: Live Preview ✅
+- [x] Create ResumePreview component
+- [x] Connect preview to Zustand store
+- [x] Implement real-time updates
+- [x] Add preview scrolling
+- [x] Create ATSPreview (plain text view)
+- [x] Create PreviewToggle (Normal/ATS view switch)
 
 ### Phase 7: ATS Features
 - [ ] Implement ATS scoring algorithm
@@ -573,8 +573,22 @@ resume/
   - Skills form with tag-style input (Enter/comma to add)
   - Summary form with character count guidance
 
+- [x] **Phase 5 Complete:**
+  - 4 ATS-friendly templates created (Classic, Modern, Minimal, Compact)
+  - ATSPreview component for plain-text view
+  - Templates render live with real store data
+  - Template selection persists via uiStore
+  - Normal/ATS view toggle works with all templates
+
+- [x] **Phase 6 Complete:**
+  - ResumePreview component connected to Zustand store
+  - Real-time updates as user types
+  - Preview scrolling works
+  - ATSPreview shows plain-text view
+  - Normal/ATS view toggle in preview header
+
 ### Next Steps
-- Start Phase 5: Resume Templates
+- Start Phase 7: ATS Features (scoring, job matcher)
 
 ---
 
