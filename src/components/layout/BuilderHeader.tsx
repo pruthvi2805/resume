@@ -1,13 +1,24 @@
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { ATSScore } from '../ats';
+import { useResumeStore } from '../../stores/resumeStore';
+import { canExportPDF, exportToPDF } from '../../utils/pdfExport';
 
 interface BuilderHeaderProps {
   onBack: () => void;
 }
 
 export function BuilderHeader({ onBack }: BuilderHeaderProps) {
+  const { data } = useResumeStore();
+  const canExport = canExportPDF(data);
+
+  const handleDownload = () => {
+    if (canExport) {
+      exportToPDF();
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 bg-bg-primary/80 backdrop-blur-sm border-b border-border">
+    <header className="sticky top-0 z-50 bg-bg-primary/80 backdrop-blur-sm border-b border-border print:hidden">
       <div className="px-4 sm:px-6">
         <div className="flex items-center justify-between h-14">
           {/* Logo with back action */}
@@ -38,9 +49,14 @@ export function BuilderHeader({ onBack }: BuilderHeaderProps) {
           <div className="flex items-center gap-1">
             <ThemeToggle />
             <button
-              className="ml-2 px-4 py-2 bg-accent hover:bg-accent-hover text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
-              disabled
-              title="Fill in your resume first"
+              onClick={handleDownload}
+              className={`ml-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2 ${
+                canExport
+                  ? 'bg-accent hover:bg-accent-hover text-white cursor-pointer'
+                  : 'bg-bg-hover text-text-muted cursor-not-allowed'
+              }`}
+              disabled={!canExport}
+              title={canExport ? 'Download as PDF' : 'Fill in your resume first'}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />

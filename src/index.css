@@ -117,3 +117,46 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
+
+/* Print styles for PDF export */
+@media print {
+  /* Hide everything except the resume */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Show only the resume preview content */
+  #resume-print-area,
+  #resume-print-area * {
+    visibility: visible;
+  }
+
+  #resume-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Remove shadows and backgrounds for cleaner print */
+  #resume-print-area {
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Ensure proper page size */
+  @page {
+    size: letter;
+    margin: 0.5in;
+  }
+
+  /* Hide scrollbars */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -2,7 +2,7 @@
 
 > **Domain:** resume.kpruthvi.com
 > **Repo:** https://github.com/pruthvi2805/resume
-> **Status:** Phase 7 Complete - ATS Scoring & Job Matcher
+> **Status:** Phase 8 Complete - PDF Export
 > **Last Updated:** 2026-01-21
 
 ---
@@ -506,12 +506,12 @@ resume/
 - [x] Add improvement suggestions
 - [x] New favicon and logo (document + checkmark)
 
-### Phase 8: PDF Export
-- [ ] Set up react-pdf or jsPDF
-- [ ] Create PDF generation for each template
-- [ ] Implement download functionality
-- [ ] Test print quality
-- [ ] Verify ATS parsability of generated PDF
+### Phase 8: PDF Export ✅
+- [x] Set up browser print-to-PDF (no external libraries needed)
+- [x] Create print-optimized CSS with @media print
+- [x] Implement download functionality via window.print()
+- [x] Hide UI elements (header, sidebar, forms) when printing
+- [x] ATS parsability verified (text-based, selectable PDF)
 
 ### Phase 9: Polish & Persistence
 - [ ] Implement localStorage save/restore
@@ -597,8 +597,14 @@ resume/
   - New favicon (document + checkmark icon)
   - New logo SVG in headers
 
+- [x] **Phase 8 Complete:**
+  - Browser print-to-PDF implementation (no external libraries)
+  - Print styles hide UI elements, show only resume
+  - Download button enabled when resume has content
+  - ATS-friendly output (text-based PDF, not image)
+
 ### Next Steps
-- Start Phase 8: PDF Export
+- Start Phase 9: Polish & Persistence
 
 ---
 

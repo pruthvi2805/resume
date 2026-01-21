@@ -122,9 +122,9 @@ export function ResumePreview() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-bg-hover/50 overflow-hidden">
-      {/* Preview Header */}
-      <div className="flex items-center justify-between gap-2 px-3 py-2 bg-bg-surface border-b border-border">
+    <div className="flex-1 flex flex-col bg-bg-hover/50 overflow-hidden print:overflow-visible print:bg-white">
+      {/* Preview Header - Hidden when printing */}
+      <div className="flex items-center justify-between gap-2 px-3 py-2 bg-bg-surface border-b border-border print:hidden">
         {/* Template Switcher with Label */}
         <div className="flex items-center gap-2">
           <span className="text-xs text-text-muted hidden sm:inline">Template:</span>
@@ -171,9 +171,9 @@ export function ResumePreview() {
         </div>
       </div>
 
-      {/* Sample Data Banner */}
+      {/* Sample Data Banner - Hidden when printing */}
       {isShowingSample && (
-        <div className="px-3 py-1.5 bg-accent/10 border-b border-accent/20 text-center">
+        <div className="px-3 py-1.5 bg-accent/10 border-b border-accent/20 text-center print:hidden">
           <span className="text-xs text-accent">
             Preview with sample data — fill in your details to see your resume
           </span>
@@ -181,9 +181,10 @@ export function ResumePreview() {
       )}
 
       {/* Preview Content */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 print:p-0 print:overflow-visible">
         <div
-          className="mx-auto bg-white shadow-lg"
+          id="resume-print-area"
+          className="mx-auto bg-white shadow-lg print:shadow-none print:max-w-none"
           style={{
             width: '100%',
             maxWidth: '612px',
@@ -193,9 +194,9 @@ export function ResumePreview() {
           {viewMode === 'normal' ? renderTemplate() : <ATSPreview data={displayData} />}
         </div>
 
-        {/* ATS View Explanation */}
+        {/* ATS View Explanation - Hidden when printing */}
         {viewMode === 'ats' && (
-          <p className="text-center text-xs text-text-muted mt-4 max-w-md mx-auto">
+          <p className="text-center text-xs text-text-muted mt-4 max-w-md mx-auto print:hidden">
             This is how ATS (Applicant Tracking Systems) see your resume.
             Make sure all important information is clearly visible in plain text.
           </p>
