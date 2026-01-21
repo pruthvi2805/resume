@@ -146,6 +146,9 @@ export function MobilePreview() {
           </span>
         </div>
       )}
+
+      {/* Spacer for bottom sheet */}
+      <div className="h-[160px] flex-shrink-0" />
     </div>
   );
 }

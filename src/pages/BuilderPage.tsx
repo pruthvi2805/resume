@@ -91,15 +91,17 @@ export function BuilderPage({ onBack }: BuilderPageProps) {
             transform: mobileView === 'preview' ? 'translateX(-50%)' : 'translateX(0)',
           }}
         >
-          {/* Edit View - more padding for bottom sheet */}
-          <div className="w-1/2 h-full overflow-y-auto bg-bg-surface pb-[220px]">
+          {/* Edit View */}
+          <div className="w-1/2 h-full overflow-y-auto bg-bg-surface">
             <div className="p-4">
               {renderForm(activeSection)}
             </div>
+            {/* Spacer for bottom sheet */}
+            <div className="h-[180px] flex-shrink-0" />
           </div>
 
-          {/* Preview View - padding for bottom sheet with controls */}
-          <div className="w-1/2 h-full pb-[180px]">
+          {/* Preview View */}
+          <div className="w-1/2 h-full">
             <MobilePreview />
           </div>
         </div>
