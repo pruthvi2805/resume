@@ -41,10 +41,10 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
   };
 
   const breakdownItems = [
-    { label: 'Contact', value: score.breakdown.contactInfo, max: 20, icon: '👤' },
-    { label: 'Sections', value: score.breakdown.sections, max: 55, icon: '📄' },
-    { label: 'Depth', value: score.breakdown.length, max: 15, icon: '📝' },
-    { label: 'Structure', value: score.breakdown.formatting, max: 10, icon: '✓' },
+    { label: 'Contact', value: score.breakdown.contactInfo, max: 20 },
+    { label: 'Sections', value: score.breakdown.sections, max: 55 },
+    { label: 'Depth', value: score.breakdown.length, max: 15 },
+    { label: 'Structure', value: score.breakdown.formatting, max: 10 },
   ];
 
   const circumference = 2 * Math.PI * 36;
@@ -130,7 +130,7 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-xs" style={{ color: isDark ? '#a0a0a0' : '#6b7280' }}>
-                    {item.icon} {item.label}
+                    {item.label}
                   </span>
                   <span className="text-xs font-medium tabular-nums" style={{ color: barColor }}>
                     {item.value}/{item.max}
@@ -162,7 +162,7 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
             <div className="space-y-1.5">
               {suggestions.slice(0, 2).map((s, i) => (
                 <div key={i} className="flex items-start gap-2 text-xs" style={{ color: isDark ? '#d1d5db' : '#4b5563' }}>
-                  <span style={{ color: '#22c55e' }}>→</span>
+                  <span className="mt-0.5 opacity-50">-</span>
                   <span>{s}</span>
                 </div>
               ))}
