@@ -6,7 +6,7 @@ export function Header() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
+          <a href={import.meta.env.BASE_URL} className="flex items-center gap-2">
             <span className="w-8 h-8 flex items-center justify-center bg-accent text-white text-sm font-bold rounded-md">
               RB
             </span>
