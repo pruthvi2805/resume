@@ -2,7 +2,7 @@
 
 > **Domain:** resume.kpruthvi.com
 > **Repo:** https://github.com/pruthvi2805/resume
-> **Status:** Phase 2 Complete - Landing Page Live
+> **Status:** Phase 3 Complete - Builder Layout Done
 > **Last Updated:** 2026-01-21
 
 ---
@@ -458,14 +458,14 @@ resume/
 - [x] Dark/light mode support
 - [x] GitHub Pages deployment workflow
 
-### Phase 3: Builder Layout
-- [ ] Create builder page layout (sidebar + preview)
-- [ ] Create section navigation in sidebar
-- [ ] Create template switcher in sidebar
-- [ ] Create job matcher placeholder in sidebar
-- [ ] Create preview area with scroll
-- [ ] Create header with ATS score and download button
-- [ ] Responsive design (stack on mobile)
+### Phase 3: Builder Layout ✅
+- [x] Create builder page layout (sidebar + preview)
+- [x] Create section navigation in sidebar
+- [x] Create template switcher in sidebar
+- [x] Create job matcher placeholder in sidebar
+- [x] Create preview area with scroll
+- [x] Create header with ATS score and download button
+- [x] Responsive design (stack on mobile)
 
 ### Phase 4: Form Components
 - [ ] Create reusable Input, Textarea, Select components
@@ -557,8 +557,16 @@ resume/
   - TypeScript types defined (ResumeData, templates, ATS types)
   - README.md and .gitignore finalized
 
+- [x] **Phase 3 Complete:**
+  - BuilderHeader with ATS score badge and download button
+  - Sidebar with section navigation, template switcher, job matcher
+  - ResumePreview with Normal/ATS view toggle
+  - BuilderPage combining all components
+  - Responsive mobile layout with sidebar toggle
+  - Home link fixed to use correct base path
+
 ### Next Steps
-- Start Phase 2: Landing Page
+- Start Phase 4: Form Components
 
 ---
 
