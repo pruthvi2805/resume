@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useResumeStore } from '../../stores/resumeStore';
 import { getImprovementSuggestions } from '../../utils/atsScorer';
 import type { ATSScore } from '../../types';
@@ -8,9 +10,17 @@ interface ATSScoreBreakdownProps {
   onClose: () => void;
 }
 
-export function ATSScoreBreakdown({ score, label, onClose }: ATSScoreBreakdownProps) {
+function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
   const { data } = useResumeStore();
   const suggestions = getImprovementSuggestions(data, score.breakdown);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   const getScoreRingColor = (score: number) => {
     if (score >= 80) return '#22c55e';
@@ -61,20 +71,23 @@ export function ATSScoreBreakdown({ score, label, onClose }: ATSScoreBreakdownPr
   const strokeDashoffset = circumference - (score.overall / 100) * circumference;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      className="fixed inset-0 flex items-center justify-center p-4"
+      style={{ zIndex: 9999 }}
+    >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/60"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="relative bg-bg-surface rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden">
+      <div className="relative bg-white dark:bg-[#252525] rounded-2xl shadow-2xl w-full max-w-sm max-h-[90vh] overflow-y-auto">
         {/* Header with Score Circle */}
-        <div className="bg-gradient-to-br from-bg-primary to-bg-surface p-6 text-center border-b border-border">
+        <div className="p-6 text-center border-b border-gray-200 dark:border-gray-700">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-1.5 text-text-muted hover:text-text-primary hover:bg-bg-hover rounded-lg transition-colors"
+            className="absolute top-4 right-4 p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M18 6L6 18M6 6l12 12" />
@@ -90,9 +103,9 @@ export function ATSScoreBreakdown({ score, label, onClose }: ATSScoreBreakdownPr
                 cy="70"
                 r="54"
                 fill="none"
-                stroke="currentColor"
+                stroke="#e5e7eb"
                 strokeWidth="10"
-                className="text-border"
+                className="dark:stroke-gray-700"
               />
               {/* Progress circle */}
               <circle
@@ -112,7 +125,7 @@ export function ATSScoreBreakdown({ score, label, onClose }: ATSScoreBreakdownPr
               <span className={`text-4xl font-bold ${getScoreTextColor(score.overall)}`}>
                 {score.overall}
               </span>
-              <span className="text-xs text-text-muted">out of 100</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">out of 100</span>
             </div>
           </div>
 
@@ -123,7 +136,7 @@ export function ATSScoreBreakdown({ score, label, onClose }: ATSScoreBreakdownPr
 
         {/* Breakdown Section */}
         <div className="p-5">
-          <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-4">
+          <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
             Score Breakdown
           </h3>
 
@@ -135,16 +148,16 @@ export function ATSScoreBreakdown({ score, label, onClose }: ATSScoreBreakdownPr
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2">
                       <span className="text-sm">{item.icon}</span>
-                      <span className="text-sm font-medium text-text-primary">{item.label}</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.label}</span>
                     </div>
                     <span className="text-sm tabular-nums">
-                      <span className={percentage >= 70 ? 'text-green-500' : percentage >= 40 ? 'text-yellow-500' : 'text-text-muted'}>
+                      <span className={percentage >= 70 ? 'text-green-500' : percentage >= 40 ? 'text-yellow-500' : 'text-gray-400'}>
                         {item.value}
                       </span>
-                      <span className="text-text-muted">/{item.max}</span>
+                      <span className="text-gray-400">/{item.max}</span>
                     </span>
                   </div>
-                  <div className="h-2 bg-bg-hover rounded-full overflow-hidden">
+                  <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${
                         percentage >= 70 ? 'bg-green-500' : percentage >= 40 ? 'bg-yellow-500' : 'bg-orange-500'
@@ -152,7 +165,7 @@ export function ATSScoreBreakdown({ score, label, onClose }: ATSScoreBreakdownPr
                       style={{ width: `${percentage}%` }}
                     />
                   </div>
-                  <p className="text-xs text-text-muted mt-1">{item.tip}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{item.tip}</p>
                 </div>
               );
             })}
@@ -162,14 +175,14 @@ export function ATSScoreBreakdown({ score, label, onClose }: ATSScoreBreakdownPr
         {/* Suggestions Section */}
         {suggestions.length > 0 && (
           <div className="px-5 pb-5">
-            <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">
+            <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
               How to Improve
             </h3>
             <ul className="space-y-2">
               {suggestions.map((suggestion, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm">
-                  <span className="text-accent mt-0.5">→</span>
-                  <span className="text-text-secondary">{suggestion}</span>
+                  <span className="text-green-500 mt-0.5">→</span>
+                  <span className="text-gray-600 dark:text-gray-300">{suggestion}</span>
                 </li>
               ))}
             </ul>
@@ -177,15 +190,23 @@ export function ATSScoreBreakdown({ score, label, onClose }: ATSScoreBreakdownPr
         )}
 
         {/* Footer */}
-        <div className="p-4 border-t border-border bg-bg-primary/50">
+        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
           <button
             onClick={onClose}
-            className="w-full py-2.5 bg-accent hover:bg-accent-hover text-white font-medium rounded-lg transition-colors"
+            className="w-full py-2.5 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors"
           >
             Got it
           </button>
         </div>
       </div>
     </div>
+  );
+}
+
+export function ATSScoreBreakdown(props: ATSScoreBreakdownProps) {
+  // Use portal to render modal at document body level
+  return createPortal(
+    <ModalContent {...props} />,
+    document.body
   );
 }
