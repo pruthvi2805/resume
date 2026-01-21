@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { useUIStore } from '../../stores/uiStore';
 import { useResumeStore } from '../../stores/resumeStore';
 import { calculateJobMatch } from '../../utils/keywordExtractor';
-import type { TemplateId } from '../../types';
 
 const sections = [
   { id: 'personal', label: 'Personal Info', icon: '👤' },
@@ -14,20 +13,13 @@ const sections = [
   { id: 'projects', label: 'Projects', icon: '🚀' },
 ];
 
-const templates = [
-  { id: 'classic', label: 'Classic' },
-  { id: 'modern', label: 'Modern' },
-  { id: 'minimal', label: 'Minimal' },
-  { id: 'compact', label: 'Compact' },
-];
-
 interface SidebarProps {
   activeSection: string;
   onSectionChange: (section: string) => void;
 }
 
 export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
-  const { selectedTemplate, setTemplate, jobDescription, setJobDescription } = useUIStore();
+  const { jobDescription, setJobDescription } = useUIStore();
   const { data } = useResumeStore();
   const [showAllMissing, setShowAllMissing] = useState(false);
 
@@ -67,31 +59,6 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
               </button>
             ))}
           </nav>
-        </div>
-
-        {/* Divider */}
-        <hr className="border-border" />
-
-        {/* Template Switcher */}
-        <div>
-          <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">
-            Template
-          </h3>
-          <div className="grid grid-cols-2 gap-2">
-            {templates.map((template) => (
-              <button
-                key={template.id}
-                onClick={() => setTemplate(template.id as TemplateId)}
-                className={`px-3 py-2 text-xs font-medium rounded-lg border transition-colors ${
-                  selectedTemplate === template.id
-                    ? 'border-accent bg-accent/10 text-accent'
-                    : 'border-border text-text-secondary hover:border-text-muted'
-                }`}
-              >
-                {template.label}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Divider */}

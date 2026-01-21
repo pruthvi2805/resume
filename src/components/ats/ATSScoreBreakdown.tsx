@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useResumeStore } from '../../stores/resumeStore';
+import { useThemeStore } from '../../stores/themeStore';
 import { getImprovementSuggestions } from '../../utils/atsScorer';
 import type { ATSScore } from '../../types';
 
@@ -12,7 +13,9 @@ interface ATSScoreBreakdownProps {
 
 function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
   const { data } = useResumeStore();
+  const { theme } = useThemeStore();
   const suggestions = getImprovementSuggestions(data, score.breakdown);
+  const isDark = theme === 'dark';
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -82,12 +85,24 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
       />
 
       {/* Modal */}
-      <div className="relative bg-white dark:bg-[#252525] rounded-2xl shadow-2xl w-full max-w-sm max-h-[90vh] overflow-y-auto">
+      <div
+        className="relative rounded-2xl shadow-2xl w-full max-w-sm max-h-[90vh] overflow-y-auto"
+        style={{
+          backgroundColor: isDark ? '#252525' : '#ffffff',
+          color: isDark ? '#fafaf8' : '#1a1a1a'
+        }}
+      >
         {/* Header with Score Circle */}
-        <div className="p-6 text-center border-b border-gray-200 dark:border-gray-700">
+        <div
+          className="p-6 text-center border-b"
+          style={{ borderColor: isDark ? '#404040' : '#e5e5e5' }}
+        >
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            className="absolute top-4 right-4 p-1.5 rounded-lg transition-colors"
+            style={{
+              color: isDark ? '#a0a0a0' : '#9ca3af',
+            }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M18 6L6 18M6 6l12 12" />
@@ -103,9 +118,8 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
                 cy="70"
                 r="54"
                 fill="none"
-                stroke="#e5e7eb"
+                stroke={isDark ? '#404040' : '#e5e7eb'}
                 strokeWidth="10"
-                className="dark:stroke-gray-700"
               />
               {/* Progress circle */}
               <circle
@@ -125,7 +139,7 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
               <span className={`text-4xl font-bold ${getScoreTextColor(score.overall)}`}>
                 {score.overall}
               </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">out of 100</span>
+              <span style={{ color: isDark ? '#a0a0a0' : '#6b7280', fontSize: '12px' }}>out of 100</span>
             </div>
           </div>
 
@@ -136,7 +150,10 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
 
         {/* Breakdown Section */}
         <div className="p-5">
-          <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+          <h3
+            className="text-xs font-semibold uppercase tracking-wider mb-4"
+            style={{ color: isDark ? '#a0a0a0' : '#6b7280' }}
+          >
             Score Breakdown
           </h3>
 
@@ -148,16 +165,24 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2">
                       <span className="text-sm">{item.icon}</span>
-                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.label}</span>
+                      <span
+                        className="text-sm font-medium"
+                        style={{ color: isDark ? '#fafaf8' : '#1a1a1a' }}
+                      >
+                        {item.label}
+                      </span>
                     </div>
                     <span className="text-sm tabular-nums">
                       <span className={percentage >= 70 ? 'text-green-500' : percentage >= 40 ? 'text-yellow-500' : 'text-gray-400'}>
                         {item.value}
                       </span>
-                      <span className="text-gray-400">/{item.max}</span>
+                      <span style={{ color: isDark ? '#666666' : '#9ca3af' }}>/{item.max}</span>
                     </span>
                   </div>
-                  <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div
+                    className="h-2 rounded-full overflow-hidden"
+                    style={{ backgroundColor: isDark ? '#333333' : '#f3f4f6' }}
+                  >
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${
                         percentage >= 70 ? 'bg-green-500' : percentage >= 40 ? 'bg-yellow-500' : 'bg-orange-500'
@@ -165,7 +190,12 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
                       style={{ width: `${percentage}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{item.tip}</p>
+                  <p
+                    className="text-xs mt-1"
+                    style={{ color: isDark ? '#666666' : '#9ca3af' }}
+                  >
+                    {item.tip}
+                  </p>
                 </div>
               );
             })}
@@ -175,14 +205,17 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
         {/* Suggestions Section */}
         {suggestions.length > 0 && (
           <div className="px-5 pb-5">
-            <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+            <h3
+              className="text-xs font-semibold uppercase tracking-wider mb-3"
+              style={{ color: isDark ? '#a0a0a0' : '#6b7280' }}
+            >
               How to Improve
             </h3>
             <ul className="space-y-2">
               {suggestions.map((suggestion, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm">
                   <span className="text-green-500 mt-0.5">→</span>
-                  <span className="text-gray-600 dark:text-gray-300">{suggestion}</span>
+                  <span style={{ color: isDark ? '#d1d5db' : '#4b5563' }}>{suggestion}</span>
                 </li>
               ))}
             </ul>
@@ -190,7 +223,10 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
         )}
 
         {/* Footer */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+        <div
+          className="p-4 border-t"
+          style={{ borderColor: isDark ? '#404040' : '#e5e5e5' }}
+        >
           <button
             onClick={onClose}
             className="w-full py-2.5 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors"

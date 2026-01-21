@@ -2,10 +2,18 @@ import { useResumeStore } from '../../stores/resumeStore';
 import { useUIStore } from '../../stores/uiStore';
 import { TemplateClassic, TemplateModern, TemplateMinimal, TemplateCompact } from '../templates';
 import { ATSPreview } from './ATSPreview';
+import type { TemplateId } from '../../types';
+
+const templates: { id: TemplateId; label: string }[] = [
+  { id: 'classic', label: 'Classic' },
+  { id: 'modern', label: 'Modern' },
+  { id: 'minimal', label: 'Minimal' },
+  { id: 'compact', label: 'Compact' },
+];
 
 export function ResumePreview() {
   const { data } = useResumeStore();
-  const { viewMode, setViewMode, selectedTemplate } = useUIStore();
+  const { viewMode, setViewMode, selectedTemplate, setTemplate } = useUIStore();
 
   const renderTemplate = () => {
     switch (selectedTemplate) {
@@ -25,12 +33,29 @@ export function ResumePreview() {
   return (
     <div className="flex-1 flex flex-col bg-bg-hover/50 overflow-hidden">
       {/* Preview Header */}
-      <div className="flex items-center justify-between px-4 py-3 bg-bg-surface border-b border-border">
-        <h2 className="text-sm font-medium text-text-secondary">Preview</h2>
+      <div className="flex items-center justify-between gap-2 px-3 py-2 bg-bg-surface border-b border-border">
+        {/* Template Switcher */}
+        <div className="flex items-center gap-1">
+          {templates.map((template) => (
+            <button
+              key={template.id}
+              onClick={() => setTemplate(template.id)}
+              className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
+                selectedTemplate === template.id
+                  ? 'bg-accent text-white'
+                  : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
+              }`}
+            >
+              {template.label}
+            </button>
+          ))}
+        </div>
+
+        {/* View Mode Toggle */}
         <div className="flex items-center gap-1 p-1 bg-bg-primary rounded-lg border border-border">
           <button
             onClick={() => setViewMode('normal')}
-            className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
               viewMode === 'normal'
                 ? 'bg-bg-surface text-text-primary shadow-sm'
                 : 'text-text-secondary hover:text-text-primary'
@@ -40,7 +65,7 @@ export function ResumePreview() {
           </button>
           <button
             onClick={() => setViewMode('ats')}
-            className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
               viewMode === 'ats'
                 ? 'bg-bg-surface text-text-primary shadow-sm'
                 : 'text-text-secondary hover:text-text-primary'
@@ -52,7 +77,7 @@ export function ResumePreview() {
       </div>
 
       {/* Preview Content */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-8">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6">
         <div
           className="mx-auto bg-white shadow-lg"
           style={{
