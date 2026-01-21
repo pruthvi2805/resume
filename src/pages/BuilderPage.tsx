@@ -75,7 +75,7 @@ export function BuilderPage({ onBack }: BuilderPageProps) {
           </div>
 
           {/* Preview Area */}
-          <div className="flex-1 print:flex print:w-full">
+          <div className="flex-1 min-h-0 overflow-hidden print:flex print:w-full print:overflow-visible">
             <ResumePreview />
           </div>
         </main>
