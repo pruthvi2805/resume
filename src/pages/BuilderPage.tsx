@@ -2,9 +2,39 @@ import { useState } from 'react';
 import { BuilderHeader } from '../components/layout/BuilderHeader';
 import { Sidebar } from '../components/layout/Sidebar';
 import { ResumePreview } from '../components/preview/ResumePreview';
+import {
+  PersonalInfoForm,
+  SummaryForm,
+  ExperienceForm,
+  EducationForm,
+  SkillsForm,
+  CertificationsForm,
+  ProjectsForm,
+} from '../components/forms';
 
 interface BuilderPageProps {
   onBack: () => void;
+}
+
+function renderForm(section: string) {
+  switch (section) {
+    case 'personal':
+      return <PersonalInfoForm />;
+    case 'summary':
+      return <SummaryForm />;
+    case 'experience':
+      return <ExperienceForm />;
+    case 'education':
+      return <EducationForm />;
+    case 'skills':
+      return <SkillsForm />;
+    case 'certifications':
+      return <CertificationsForm />;
+    case 'projects':
+      return <ProjectsForm />;
+    default:
+      return <PersonalInfoForm />;
+  }
 }
 
 export function BuilderPage({ onBack }: BuilderPageProps) {
@@ -65,41 +95,10 @@ export function BuilderPage({ onBack }: BuilderPageProps) {
 
         {/* Main Content Area */}
         <main className="flex-1 flex overflow-hidden">
-          {/* Form Area - Will be implemented in Phase 4 */}
+          {/* Form Area */}
           <div className="w-full lg:w-[400px] flex-shrink-0 border-r border-border bg-bg-surface overflow-y-auto">
             <div className="p-6">
-              <h2 className="text-lg font-semibold text-text-primary mb-4 capitalize">
-                {activeSection.replace('-', ' ')} Info
-              </h2>
-              <div className="space-y-4">
-                <p className="text-sm text-text-muted">
-                  Form fields for {activeSection} will appear here in Phase 4.
-                </p>
-
-                {/* Placeholder Form Fields */}
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-text-secondary mb-1">
-                      Sample Field
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter value..."
-                      className="w-full px-3 py-2 bg-bg-primary border border-border rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-text-secondary mb-1">
-                      Another Field
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter value..."
-                      className="w-full px-3 py-2 bg-bg-primary border border-border rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent"
-                    />
-                  </div>
-                </div>
-              </div>
+              {renderForm(activeSection)}
             </div>
           </div>
 
