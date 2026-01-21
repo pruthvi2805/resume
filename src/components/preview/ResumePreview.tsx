@@ -1,8 +1,9 @@
+import { useMemo } from 'react';
 import { useResumeStore } from '../../stores/resumeStore';
 import { useUIStore } from '../../stores/uiStore';
 import { TemplateClassic, TemplateModern, TemplateMinimal, TemplateCompact } from '../templates';
 import { ATSPreview } from './ATSPreview';
-import type { TemplateId } from '../../types';
+import type { TemplateId, ResumeData } from '../../types';
 
 const templates: { id: TemplateId; label: string; style: React.CSSProperties }[] = [
   { id: 'classic', label: 'Classic', style: { fontFamily: 'Georgia, serif', fontWeight: 500 } },
@@ -11,22 +12,112 @@ const templates: { id: TemplateId; label: string; style: React.CSSProperties }[]
   { id: 'compact', label: 'Compact', style: { fontFamily: 'system-ui, sans-serif', fontWeight: 500, fontSize: '10px' } },
 ];
 
+// Sample data to show when resume is empty
+const sampleData: ResumeData = {
+  personalInfo: {
+    fullName: 'Alex Johnson',
+    email: 'alex.johnson@email.com',
+    phone: '(555) 123-4567',
+    location: 'San Francisco, CA',
+    linkedinUrl: 'linkedin.com/in/alexjohnson',
+    portfolioUrl: 'alexjohnson.dev',
+  },
+  summary: {
+    text: 'Results-driven software engineer with 5+ years of experience building scalable web applications. Passionate about clean code, user experience, and mentoring junior developers. Led teams that delivered products serving millions of users.',
+  },
+  experience: [
+    {
+      id: '1',
+      jobTitle: 'Senior Software Engineer',
+      company: 'Tech Corp',
+      location: 'San Francisco, CA',
+      startDate: '2021-03',
+      endDate: 'present',
+      isCurrentRole: true,
+      bullets: [
+        'Led development of microservices architecture serving 2M+ daily users',
+        'Mentored team of 4 junior developers, improving code quality by 40%',
+        'Reduced API response time by 60% through optimization initiatives',
+      ],
+    },
+    {
+      id: '2',
+      jobTitle: 'Software Engineer',
+      company: 'StartupXYZ',
+      location: 'Remote',
+      startDate: '2019-01',
+      endDate: '2021-02',
+      isCurrentRole: false,
+      bullets: [
+        'Built React dashboard used by 500+ enterprise clients',
+        'Implemented CI/CD pipeline reducing deployment time by 70%',
+      ],
+    },
+  ],
+  education: [
+    {
+      id: '1',
+      degree: 'B.S. Computer Science',
+      institution: 'University of California',
+      year: '2018',
+      achievements: 'Magna Cum Laude, Dean\'s List',
+    },
+  ],
+  skills: {
+    items: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'AWS', 'Docker', 'PostgreSQL', 'GraphQL', 'Git'],
+  },
+  certifications: [
+    {
+      id: '1',
+      name: 'AWS Solutions Architect',
+      issuer: 'Amazon Web Services',
+      year: '2023',
+    },
+  ],
+  projects: [
+    {
+      id: '1',
+      name: 'Open Source CLI Tool',
+      description: 'Built a developer productivity tool with 2K+ GitHub stars',
+      link: 'github.com/alexj/cli-tool',
+    },
+  ],
+};
+
+// Check if resume data is essentially empty
+function isResumeEmpty(data: ResumeData): boolean {
+  const hasName = data.personalInfo.fullName.trim().length > 0;
+  const hasEmail = data.personalInfo.email.trim().length > 0;
+  const hasSummary = data.summary.text.trim().length > 0;
+  const hasExperience = data.experience.length > 0 && data.experience.some(e => e.jobTitle.trim().length > 0);
+
+  // Consider empty if missing basic info
+  return !hasName && !hasEmail && !hasSummary && !hasExperience;
+}
+
 export function ResumePreview() {
   const { data } = useResumeStore();
   const { viewMode, setViewMode, selectedTemplate, setTemplate } = useUIStore();
 
+  // Use sample data if resume is empty
+  const displayData = useMemo(() => {
+    return isResumeEmpty(data) ? sampleData : data;
+  }, [data]);
+
+  const isShowingSample = isResumeEmpty(data);
+
   const renderTemplate = () => {
     switch (selectedTemplate) {
       case 'classic':
-        return <TemplateClassic data={data} />;
+        return <TemplateClassic data={displayData} />;
       case 'modern':
-        return <TemplateModern data={data} />;
+        return <TemplateModern data={displayData} />;
       case 'minimal':
-        return <TemplateMinimal data={data} />;
+        return <TemplateMinimal data={displayData} />;
       case 'compact':
-        return <TemplateCompact data={data} />;
+        return <TemplateCompact data={displayData} />;
       default:
-        return <TemplateModern data={data} />;
+        return <TemplateModern data={displayData} />;
     }
   };
 
@@ -34,31 +125,34 @@ export function ResumePreview() {
     <div className="flex-1 flex flex-col bg-bg-hover/50 overflow-hidden">
       {/* Preview Header */}
       <div className="flex items-center justify-between gap-2 px-3 py-2 bg-bg-surface border-b border-border">
-        {/* Template Switcher */}
-        <div className="flex items-center gap-1">
-          {templates.map((template) => (
-            <button
-              key={template.id}
-              onClick={() => setTemplate(template.id)}
-              className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
-                selectedTemplate === template.id
-                  ? 'bg-accent text-white'
-                  : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
-              }`}
-              style={template.style}
-            >
-              {template.label}
-            </button>
-          ))}
+        {/* Template Switcher with Label */}
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-text-muted hidden sm:inline">Template:</span>
+          <div className="flex items-center gap-1">
+            {templates.map((template) => (
+              <button
+                key={template.id}
+                onClick={() => setTemplate(template.id)}
+                className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
+                  selectedTemplate === template.id
+                    ? 'bg-accent text-white'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
+                }`}
+                style={template.style}
+              >
+                {template.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* View Mode Toggle */}
-        <div className="flex items-center gap-1 p-1 bg-bg-primary rounded-lg border border-border">
+        {/* View Mode Toggle - Improved visibility */}
+        <div className="flex items-center gap-1 p-0.5 bg-bg-primary rounded-lg border border-border">
           <button
             onClick={() => setViewMode('normal')}
-            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
+            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
               viewMode === 'normal'
-                ? 'bg-bg-surface text-text-primary shadow-sm'
+                ? 'bg-accent text-white shadow-sm'
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
@@ -66,9 +160,9 @@ export function ResumePreview() {
           </button>
           <button
             onClick={() => setViewMode('ats')}
-            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
+            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
               viewMode === 'ats'
-                ? 'bg-bg-surface text-text-primary shadow-sm'
+                ? 'bg-accent text-white shadow-sm'
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
@@ -76,6 +170,15 @@ export function ResumePreview() {
           </button>
         </div>
       </div>
+
+      {/* Sample Data Banner */}
+      {isShowingSample && (
+        <div className="px-3 py-1.5 bg-accent/10 border-b border-accent/20 text-center">
+          <span className="text-xs text-accent">
+            Preview with sample data — fill in your details to see your resume
+          </span>
+        </div>
+      )}
 
       {/* Preview Content */}
       <div className="flex-1 overflow-y-auto p-4 sm:p-6">
@@ -87,7 +190,7 @@ export function ResumePreview() {
             minHeight: '792px',
           }}
         >
-          {viewMode === 'normal' ? renderTemplate() : <ATSPreview data={data} />}
+          {viewMode === 'normal' ? renderTemplate() : <ATSPreview data={displayData} />}
         </div>
 
         {/* ATS View Explanation */}
