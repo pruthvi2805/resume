@@ -1,7 +1,26 @@
-import { useState } from 'react';
+import { useResumeStore } from '../../stores/resumeStore';
+import { useUIStore } from '../../stores/uiStore';
+import { TemplateClassic, TemplateModern, TemplateMinimal, TemplateCompact } from '../templates';
+import { ATSPreview } from './ATSPreview';
 
 export function ResumePreview() {
-  const [viewMode, setViewMode] = useState<'normal' | 'ats'>('normal');
+  const { data } = useResumeStore();
+  const { viewMode, setViewMode, selectedTemplate } = useUIStore();
+
+  const renderTemplate = () => {
+    switch (selectedTemplate) {
+      case 'classic':
+        return <TemplateClassic data={data} />;
+      case 'modern':
+        return <TemplateModern data={data} />;
+      case 'minimal':
+        return <TemplateMinimal data={data} />;
+      case 'compact':
+        return <TemplateCompact data={data} />;
+      default:
+        return <TemplateModern data={data} />;
+    }
+  };
 
   return (
     <div className="flex-1 flex flex-col bg-bg-hover/50 overflow-hidden">
@@ -34,78 +53,15 @@ export function ResumePreview() {
 
       {/* Preview Content */}
       <div className="flex-1 overflow-y-auto p-4 sm:p-8">
-        <div className="mx-auto bg-white shadow-lg" style={{ width: '100%', maxWidth: '612px', minHeight: '792px' }}>
-          {viewMode === 'normal' ? (
-            <div className="p-8 text-gray-900">
-              {/* Placeholder Resume Content */}
-              <div className="text-center mb-6">
-                <h1 className="text-2xl font-bold text-gray-900">Your Name</h1>
-                <p className="text-sm text-gray-600 mt-1">
-                  email@example.com • City, Country • linkedin.com/in/yourprofile
-                </p>
-              </div>
-
-              <div className="mb-6">
-                <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider border-b border-gray-300 pb-1 mb-2">
-                  Professional Summary
-                </h2>
-                <p className="text-sm text-gray-600">
-                  Your professional summary will appear here. Write 2-3 sentences highlighting your experience and key strengths.
-                </p>
-              </div>
-
-              <div className="mb-6">
-                <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider border-b border-gray-300 pb-1 mb-2">
-                  Experience
-                </h2>
-                <div className="text-sm text-gray-500 italic">
-                  Fill in the Experience section to see your work history here
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider border-b border-gray-300 pb-1 mb-2">
-                  Education
-                </h2>
-                <div className="text-sm text-gray-500 italic">
-                  Fill in the Education section to see your education here
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider border-b border-gray-300 pb-1 mb-2">
-                  Skills
-                </h2>
-                <div className="text-sm text-gray-500 italic">
-                  Add your skills to see them displayed here
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="p-8 font-mono text-sm text-gray-900">
-              {/* ATS Plain Text View */}
-              <pre className="whitespace-pre-wrap">
-{`YOUR NAME
-email@example.com | City, Country | linkedin.com/in/yourprofile
-
-PROFESSIONAL SUMMARY
----
-Your professional summary will appear here.
-
-EXPERIENCE
----
-[Fill in the Experience section]
-
-EDUCATION
----
-[Fill in the Education section]
-
-SKILLS
----
-[Add your skills]`}
-              </pre>
-            </div>
-          )}
+        <div
+          className="mx-auto bg-white shadow-lg"
+          style={{
+            width: '100%',
+            maxWidth: '612px',
+            minHeight: '792px',
+          }}
+        >
+          {viewMode === 'normal' ? renderTemplate() : <ATSPreview data={data} />}
         </div>
 
         {/* ATS View Explanation */}

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useUIStore } from '../../stores/uiStore';
+import type { TemplateId } from '../../types';
 
 const sections = [
   { id: 'personal', label: 'Personal Info', icon: '👤' },
@@ -23,8 +24,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
-  const [selectedTemplate, setSelectedTemplate] = useState('modern');
-  const [jobDescription, setJobDescription] = useState('');
+  const { selectedTemplate, setTemplate, jobDescription, setJobDescription } = useUIStore();
 
   return (
     <aside className="w-full lg:w-72 flex-shrink-0 bg-bg-surface border-r border-border overflow-y-auto">
@@ -64,7 +64,7 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
             {templates.map((template) => (
               <button
                 key={template.id}
-                onClick={() => setSelectedTemplate(template.id)}
+                onClick={() => setTemplate(template.id as TemplateId)}
                 className={`px-3 py-2 text-xs font-medium rounded-lg border transition-colors ${
                   selectedTemplate === template.id
                     ? 'border-accent bg-accent/10 text-accent'
