@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useResumeStore } from '../../stores/resumeStore';
 import { useThemeStore } from '../../stores/themeStore';
@@ -16,9 +16,12 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
   const { theme } = useThemeStore();
   const suggestions = getImprovementSuggestions(data, score.breakdown);
   const isDark = theme === 'dark';
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    // Trigger animation after mount
+    requestAnimationFrame(() => setIsVisible(true));
     return () => {
       document.body.style.overflow = '';
     };
@@ -44,15 +47,20 @@ function ModalContent({ score, label, onClose }: ATSScoreBreakdownProps) {
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center p-4"
-      style={{ zIndex: 9999 }}
+      className="fixed inset-0 flex items-center justify-center p-4 transition-colors duration-200"
+      style={{
+        zIndex: 9999,
+        backgroundColor: isVisible ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0)',
+      }}
       onClick={onClose}
     >
       <div
-        className="relative rounded-xl shadow-2xl w-full max-w-xs"
+        className="relative rounded-xl shadow-2xl w-full max-w-xs transition-all duration-200"
         style={{
           backgroundColor: isDark ? '#252525' : '#ffffff',
-          color: isDark ? '#fafaf8' : '#1a1a1a'
+          color: isDark ? '#fafaf8' : '#1a1a1a',
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? 'scale(1)' : 'scale(0.95)',
         }}
         onClick={(e) => e.stopPropagation()}
       >
