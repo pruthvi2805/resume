@@ -137,7 +137,7 @@ export function ResumePreview() {
   };
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col bg-bg-hover/50 overflow-hidden print:overflow-visible print:bg-white">
+    <div className="h-full flex flex-col bg-bg-hover/50 overflow-hidden print:overflow-visible print:bg-white">
       {/* Preview Header - Hidden when printing */}
       <div className="flex items-center justify-between gap-4 px-4 py-3 bg-bg-surface border-b border-border print:hidden">
         {/* Left: Template Switcher */}
@@ -209,7 +209,7 @@ export function ResumePreview() {
       )}
 
       {/* Preview Content */}
-      <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 print:p-0 print:overflow-visible">
+      <div className="flex-1 h-0 overflow-y-auto p-4 sm:p-6 print:p-0 print:overflow-visible print:h-auto">
         <div
           id="resume-print-area"
           className="mx-auto bg-white shadow-lg print:shadow-none print:max-w-none"
