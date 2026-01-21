@@ -1,6 +1,6 @@
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
-import { Hero } from '../components/landing/Hero';
+import { HeroProductDemo } from '../components/landing/HeroProductDemo';
 import { Features } from '../components/landing/Features';
 
 interface LandingPageProps {
@@ -12,7 +12,7 @@ export function LandingPage({ onStartBuilder }: LandingPageProps) {
     <div className="min-h-screen flex flex-col bg-bg-primary">
       <Header />
       <main className="flex-1">
-        <Hero onStartFresh={onStartBuilder} />
+        <HeroProductDemo onStartFresh={onStartBuilder} />
         <Features />
       </main>
       <Footer />
