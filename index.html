@@ -8,7 +8,7 @@
     <script>
       (function() {
         var theme = localStorage.getItem('kp-theme');
-        if (theme === 'dark') {
+        if (theme !== 'light') {
           document.documentElement.classList.add('dark');
         }
       })();

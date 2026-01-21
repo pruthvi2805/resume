@@ -11,7 +11,7 @@ interface ThemeStore {
 export const useThemeStore = create<ThemeStore>()(
   persist(
     (set, get) => ({
-      theme: 'light',
+      theme: 'dark',
 
       setTheme: (theme) => {
         // Update DOM
