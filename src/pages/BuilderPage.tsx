@@ -105,22 +105,22 @@ export function BuilderPage({ onBack }: BuilderPageProps) {
             transform: mobileView === 'preview' ? 'translateX(-50%)' : 'translateX(0)',
           }}
         >
-          {/* Edit View */}
-          <div className="w-1/2 h-full overflow-y-auto bg-bg-surface pb-[140px]">
+          {/* Edit View - more padding for section pills */}
+          <div className="w-1/2 h-full overflow-y-auto bg-bg-surface pb-[180px]">
             <div className="p-4">
               {renderForm(activeSection)}
             </div>
           </div>
 
-          {/* Preview View */}
-          <div className="w-1/2 h-full pb-[140px]">
+          {/* Preview View - less padding, no section pills */}
+          <div className="w-1/2 h-full pb-[100px]">
             <MobilePreview />
           </div>
         </div>
       </div>
 
-      {/* Mobile FAB - Settings */}
-      <MobileFAB onDownload={handleDownload} canDownload={canDownload} />
+      {/* Mobile FAB - Settings (only on preview) */}
+      <MobileFAB onDownload={handleDownload} canDownload={canDownload} visible={mobileView === 'preview'} />
 
       {/* Mobile Bottom Navigation */}
       <MobileBottomSheet

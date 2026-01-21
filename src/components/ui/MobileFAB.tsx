@@ -21,11 +21,15 @@ const colorOptions: { id: AccentColorId; label: string }[] = [
 interface MobileFABProps {
   onDownload: () => void;
   canDownload: boolean;
+  visible: boolean;
 }
 
-export function MobileFAB({ onDownload, canDownload }: MobileFABProps) {
+export function MobileFAB({ onDownload, canDownload, visible }: MobileFABProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { selectedTemplate, setTemplate, accentColor, setAccentColor, viewMode, setViewMode } = useUIStore();
+
+  // Don't render if not visible
+  if (!visible) return null;
 
   return (
     <>
@@ -40,7 +44,7 @@ export function MobileFAB({ onDownload, canDownload }: MobileFABProps) {
       {/* FAB Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`lg:hidden fixed bottom-[140px] right-4 w-14 h-14 rounded-full shadow-lg flex items-center justify-center z-50 transition-all active:scale-95 ${
+        className={`lg:hidden fixed bottom-[100px] right-4 w-14 h-14 rounded-full shadow-lg flex items-center justify-center z-50 transition-all active:scale-95 ${
           isOpen ? 'bg-text-primary rotate-45' : 'bg-accent'
         }`}
         aria-label={isOpen ? 'Close settings' : 'Open settings'}
@@ -62,7 +66,7 @@ export function MobileFAB({ onDownload, canDownload }: MobileFABProps) {
 
       {/* Expanded Panel */}
       {isOpen && (
-        <div className="lg:hidden fixed bottom-[210px] right-4 w-72 max-w-[calc(100vw-32px)] bg-bg-surface rounded-2xl shadow-xl border border-border z-50 overflow-hidden">
+        <div className="lg:hidden fixed bottom-[170px] right-4 w-72 max-w-[calc(100vw-32px)] bg-bg-surface rounded-2xl shadow-xl border border-border z-50 overflow-hidden">
           {/* Header */}
           <div className="px-4 py-3 bg-bg-hover border-b border-border">
             <h3 className="text-sm font-semibold text-text-primary">Resume Settings</h3>

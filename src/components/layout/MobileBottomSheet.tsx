@@ -90,14 +90,16 @@ export function MobileBottomSheet({
 
   return (
     <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-bg-surface border-t border-border shadow-lg">
-      {/* Drag Handle */}
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex justify-center py-2 min-h-[32px]"
-        aria-label={isExpanded ? 'Collapse navigation' : 'Expand navigation'}
-      >
-        <div className={`w-10 h-1 rounded-full transition-colors ${isExpanded ? 'bg-accent' : 'bg-border'}`} />
-      </button>
+      {/* Drag Handle - Only on Edit view */}
+      {activeView === 'edit' && (
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="w-full flex justify-center py-2 min-h-[32px]"
+          aria-label={isExpanded ? 'Collapse navigation' : 'Expand navigation'}
+        >
+          <div className={`w-10 h-1 rounded-full transition-colors ${isExpanded ? 'bg-accent' : 'bg-border'}`} />
+        </button>
+      )}
 
       {/* View Toggle - Always visible */}
       <div className="flex mx-3 mb-2 bg-bg-primary rounded-lg p-1">
@@ -123,8 +125,8 @@ export function MobileBottomSheet({
         </button>
       </div>
 
-      {/* Collapsed: Horizontal scrollable pills */}
-      {!isExpanded && (
+      {/* Collapsed: Horizontal scrollable pills - Only on Edit view */}
+      {!isExpanded && activeView === 'edit' && (
         <div
           ref={scrollRef}
           className="flex gap-2 px-3 pb-3 overflow-x-auto scrollbar-hide"
@@ -147,8 +149,13 @@ export function MobileBottomSheet({
         </div>
       )}
 
-      {/* Expanded: Full grid + ATS Score */}
-      {isExpanded && (
+      {/* Preview mode: Just show some bottom padding */}
+      {!isExpanded && activeView === 'preview' && (
+        <div className="pb-2" />
+      )}
+
+      {/* Expanded: Full grid + ATS Score - Only on Edit view */}
+      {isExpanded && activeView === 'edit' && (
         <div className="px-3 pb-4 pt-1 max-h-[60vh] overflow-y-auto">
           {/* ATS Score */}
           <div className="mb-4 p-3 bg-bg-hover rounded-lg flex items-center justify-between">
