@@ -4,11 +4,11 @@ import { TemplateClassic, TemplateModern, TemplateMinimal, TemplateCompact } fro
 import { ATSPreview } from './ATSPreview';
 import type { TemplateId } from '../../types';
 
-const templates: { id: TemplateId; label: string }[] = [
-  { id: 'classic', label: 'Classic' },
-  { id: 'modern', label: 'Modern' },
-  { id: 'minimal', label: 'Minimal' },
-  { id: 'compact', label: 'Compact' },
+const templates: { id: TemplateId; label: string; style: React.CSSProperties }[] = [
+  { id: 'classic', label: 'Classic', style: { fontFamily: 'Georgia, serif', fontWeight: 500 } },
+  { id: 'modern', label: 'Modern', style: { fontFamily: 'system-ui, sans-serif', fontWeight: 700, letterSpacing: '-0.02em' } },
+  { id: 'minimal', label: 'Minimal', style: { fontFamily: 'system-ui, sans-serif', fontWeight: 300, letterSpacing: '0.02em' } },
+  { id: 'compact', label: 'Compact', style: { fontFamily: 'system-ui, sans-serif', fontWeight: 500, fontSize: '10px' } },
 ];
 
 export function ResumePreview() {
@@ -40,11 +40,12 @@ export function ResumePreview() {
             <button
               key={template.id}
               onClick={() => setTemplate(template.id)}
-              className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
+              className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
                 selectedTemplate === template.id
                   ? 'bg-accent text-white'
                   : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
               }`}
+              style={template.style}
             >
               {template.label}
             </button>
