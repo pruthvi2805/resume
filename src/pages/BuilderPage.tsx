@@ -82,7 +82,7 @@ export function BuilderPage({ onBack }: BuilderPageProps) {
       </div>
 
       {/* Mobile Layout */}
-      <div className="lg:hidden flex-1 flex flex-col min-h-0">
+      <div className="lg:hidden flex-1 flex flex-col min-h-0 overflow-hidden">
         {/* Animated View Container */}
         <div
           className="flex-1 flex min-h-0 transition-transform duration-300 ease-out"
