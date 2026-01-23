@@ -1,4 +1,14 @@
+# Resume Builder - Robots.txt
+# All content is public and crawlable
+
+# Global rules for all search engines
 User-agent: *
 Allow: /
+Disallow:
 
+# Sitemap location
 Sitemap: https://resume.kpruthvi.com/sitemap.xml
+
+# Crawl-delay (optional, helps prevent server overload)
+# Not needed for static sites, but good practice
+Crawl-delay: 1

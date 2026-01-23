@@ -1,0 +1,134 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#FAFAF8"/>
+
+  <!-- Decorative accent gradient circle -->
+  <defs>
+    <radialGradient id="accentGlow" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  <circle cx="900" cy="150" r="200" fill="url(#accentGlow)"/>
+
+  <!-- Left side - Content -->
+  <g>
+    <!-- Main heading -->
+    <text x="80" y="180" font-family="Inter, system-ui, sans-serif" font-size="68" font-weight="700" fill="#1A1A1A">
+      Resume Builder
+    </text>
+
+    <!-- Subheading -->
+    <text x="80" y="240" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="500" fill="#F59E0B">
+      ATS-Optimized Resumes
+    </text>
+
+    <!-- Tagline -->
+    <text x="80" y="290" font-family="Inter, system-ui, sans-serif" font-size="22" fill="#6B7280">
+      Resumes that get past the robots
+    </text>
+
+    <!-- Features list -->
+    <g transform="translate(80, 340)">
+      <!-- Feature 1 -->
+      <g>
+        <circle cx="8" cy="-5" r="8" fill="#10B981"/>
+        <path d="M 5 -5 L 7 -3 L 11 -9" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="30" y="0" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#374151">
+          6 ATS-Optimized Templates
+        </text>
+      </g>
+
+      <!-- Feature 2 -->
+      <g transform="translate(0, 45)">
+        <circle cx="8" cy="-5" r="8" fill="#10B981"/>
+        <path d="M 5 -5 L 7 -3 L 11 -9" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="30" y="0" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#374151">
+          Real-Time ATS Scoring
+        </text>
+      </g>
+
+      <!-- Feature 3 -->
+      <g transform="translate(0, 90)">
+        <circle cx="8" cy="-5" r="8" fill="#10B981"/>
+        <path d="M 5 -5 L 7 -3 L 11 -9" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="30" y="0" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#374151">
+          Job Description Matcher
+        </text>
+      </g>
+
+      <!-- Feature 4 -->
+      <g transform="translate(0, 135)">
+        <circle cx="8" cy="-5" r="8" fill="#10B981"/>
+        <path d="M 5 -5 L 7 -3 L 11 -9" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="30" y="0" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#374151">
+          100% Private & Free
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Right side - Resume mockup -->
+  <g transform="translate(750, 120)">
+    <!-- Resume paper with shadow -->
+    <rect x="5" y="5" width="340" height="440" rx="8" fill="#E5E7EB" opacity="0.3"/>
+    <rect width="340" height="440" rx="8" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+
+    <!-- Header section with accent color -->
+    <rect x="0" y="0" width="340" height="80" rx="8" fill="#F59E0B"/>
+    <rect x="0" y="8" width="340" height="72" fill="#F59E0B"/>
+
+    <!-- Name placeholder -->
+    <rect x="30" y="25" width="160" height="16" rx="4" fill="white" opacity="0.9"/>
+    <rect x="30" y="50" width="220" height="12" rx="3" fill="white" opacity="0.6"/>
+
+    <!-- Content sections -->
+    <g transform="translate(30, 110)">
+      <!-- Section 1 -->
+      <rect width="280" height="8" rx="2" fill="#D1D5DB"/>
+      <rect y="18" width="280" height="6" rx="2" fill="#E5E7EB"/>
+      <rect y="30" width="260" height="6" rx="2" fill="#E5E7EB"/>
+      <rect y="42" width="240" height="6" rx="2" fill="#E5E7EB"/>
+
+      <!-- Section 2 -->
+      <rect y="70" width="280" height="8" rx="2" fill="#D1D5DB"/>
+      <rect y="88" width="150" height="6" rx="2" fill="#F59E0B" opacity="0.3"/>
+      <rect y="100" width="100" height="6" rx="2" fill="#E5E7EB"/>
+      <rect y="115" width="270" height="5" rx="2" fill="#F3F4F6"/>
+      <rect y="125" width="250" height="5" rx="2" fill="#F3F4F6"/>
+      <rect y="135" width="230" height="5" rx="2" fill="#F3F4F6"/>
+
+      <!-- Section 3 -->
+      <rect y="163" width="280" height="8" rx="2" fill="#D1D5DB"/>
+      <g transform="translate(0, 181)">
+        <rect width="70" height="18" rx="4" fill="#F59E0B" opacity="0.2"/>
+        <rect x="78" width="70" height="18" rx="4" fill="#F59E0B" opacity="0.2"/>
+        <rect x="156" width="70" height="18" rx="4" fill="#F59E0B" opacity="0.2"/>
+      </g>
+    </g>
+
+    <!-- ATS checkmark badge -->
+    <g transform="translate(260, 360)">
+      <circle cx="30" cy="30" r="30" fill="#10B981"/>
+      <path d="M 20 30 L 26 36 L 42 20" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- Footer - URL -->
+  <text x="80" y="590" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="500" fill="#9CA3AF">
+    resume.kpruthvi.com
+  </text>
+
+  <!-- Privacy badge -->
+  <g transform="translate(950, 560)">
+    <rect width="180" height="45" rx="22.5" fill="#F3F4F6"/>
+    <g transform="translate(15, 22.5)">
+      <path d="M 8 0 L 8 -8 C 8 -10 6 -12 4 -12 C 2 -12 0 -10 0 -8 L 0 0 C -2 0 -4 2 -4 4 L -4 10 C -4 12 -2 14 0 14 L 8 14 C 10 14 12 12 12 10 L 12 4 C 12 2 10 0 8 0 Z" fill="#10B981"/>
+      <circle cx="4" cy="6" r="2" fill="white"/>
+      <rect x="3.5" y="6" width="1" height="4" fill="white"/>
+    </g>
+    <text x="45" y="28" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#374151">
+      100% Private
+    </text>
+  </g>
+</svg>

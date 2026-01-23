@@ -6,8 +6,8 @@ export function Header() {
       <div className="px-4 sm:px-6">
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <a href={import.meta.env.BASE_URL} className="flex items-center gap-2">
-            <svg width="28" height="28" viewBox="0 0 32 32" className="flex-shrink-0">
+          <a href={import.meta.env.BASE_URL} className="flex items-center gap-2" aria-label="Resume Builder home">
+            <svg width="28" height="28" viewBox="0 0 32 32" className="flex-shrink-0" aria-hidden="true">
               <rect x="4" y="2" width="20" height="26" rx="2" className="fill-bg-surface stroke-accent" strokeWidth="1.5"/>
               <rect x="7" y="6" width="10" height="2" rx="0.5" className="fill-accent"/>
               <rect x="7" y="10" width="14" height="1.5" rx="0.5" className="fill-text-muted"/>
