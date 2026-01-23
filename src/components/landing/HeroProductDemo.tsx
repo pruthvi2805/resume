@@ -16,7 +16,7 @@ export function HeroProductDemo({ onStartFresh }: HeroProductDemoProps) {
   }, []);
 
   return (
-    <section className="relative">
+    <section className="relative" aria-label="Hero section">
 
       {/* Main content - Split layout */}
       <div className="flex items-center justify-center px-4 sm:px-6 py-8 lg:py-12">
@@ -46,6 +46,7 @@ export function HeroProductDemo({ onStartFresh }: HeroProductDemoProps) {
             <button
               onClick={onStartFresh}
               className="group px-7 py-3.5 bg-accent hover:bg-accent-hover text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-105"
+              aria-label="Start building your resume"
             >
               <span className="flex items-center gap-2">
                 Start Building
